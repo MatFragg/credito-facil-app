@@ -1,0 +1,94 @@
+<mat-card [class]="config.cardClass || 'list-card'">
+    <!-- Card Header -->
+    <div class="card-header">
+        <h3>{{ config.title }}</h3>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="loading-state">
+            <mat-spinner diameter="40"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
+
+        <!-- Items List -->
+        <div *ngIf="!isLoading && displayedItems.length > 0" class="list-items">
+            <div *ngFor="let item of displayedItems; let last = last" class="list-item"
+                [class.clickable]="itemConfig.clickable" [class.no-divider]="last || !config.showDividers"
+                (click)="onItemClick(item)">
+
+                <!-- Leading Section (Avatar/Icon/Badge) -->
+                <div *ngIf="itemConfig.leading && itemConfig.leading.type !== 'none'" class="item-leading">
+                    <!-- Avatar -->
+                    <img *ngIf="itemConfig.leading.type === 'avatar'" [src]="getLeadingContent(item)"
+                        [class]="'item-avatar ' + getLeadingClass(item)" alt="Avatar">
+
+                    <!-- Icon -->
+                    <mat-icon *ngIf="itemConfig.leading.type === 'icon'" [class]="getLeadingClass(item)">
+                        {{ getLeadingContent(item) }}
+                    </mat-icon>
+
+                    <!-- Badge -->
+                    <div *ngIf="itemConfig.leading.type === 'badge'" [class]="'item-badge ' + getLeadingClass(item)">
+                        {{ getLeadingContent(item) }}
+                    </div>
+                </div>
+
+                <!-- Main Section (Title + Subtitle) -->
+                <div class="item-main">
+                    <span class="item-title">{{ getMainTitle(item) }}</span>
+                    <span *ngIf="getMainSubtitle(item)" class="item-subtitle">
+                        {{ getMainSubtitle(item) }}
+                    </span>
+                </div>
+
+                <!-- Trailing Section (Badge/Price/Text/Icon) -->
+                <div *ngIf="itemConfig.trailing" class="item-trailing">
+                    <!-- Badge -->
+                    <span *ngIf="itemConfig.trailing.type === 'badge'"
+                        [class]="'trailing-badge ' + getTrailingClass(item)">
+                        {{ getTrailingContent(item) }}
+                    </span>
+
+                    <!-- Price with Label -->
+                    <div *ngIf="itemConfig.trailing.type === 'price'" class="trailing-price">
+                        <span class="price-value">{{ getTrailingContent(item) }}</span>
+                        <span *ngIf="getTrailingLabel(item)" class="price-label">
+                            {{ getTrailingLabel(item) }}
+                        </span>
+                    </div>
+
+                    <!-- Text -->
+                    <span *ngIf="itemConfig.trailing.type === 'text'" class="trailing-text">
+                        {{ getTrailingContent(item) }}
+                    </span>
+
+                    <!-- Icon -->
+                    <mat-icon *ngIf="itemConfig.trailing.type === 'icon'" [class]="getTrailingClass(item)">
+                        {{ getTrailingContent(item) }}
+                    </mat-icon>
+
+                    <!-- Custom (using innerHTML) -->
+                    <div *ngIf="itemConfig.trailing.type === 'custom'" [innerHTML]="getTrailingContent(item)"
+                        [class]="getTrailingClass(item)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="!isLoading && displayedItems.length === 0" class="empty-state">
+            <mat-icon class="empty-icon">inbox</mat-icon>
+            <p>No hay elementos para mostrar</p>
+        </div>
+    </div>
+
+    <!-- Footer Button -->
+    <div *ngIf="config.footerButton" class="card-footer">
+        <button mat-stroked-button color="primary" class="footer-button" (click)="config.footerButton.action()">
+            <mat-icon *ngIf="config.footerButton.icon">{{ config.footerButton.icon }}</mat-icon>
+            {{ config.footerButton.label }}
+        </button>
+    </div>
+</mat-card>

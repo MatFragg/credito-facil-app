@@ -1,0 +1,81 @@
+<div class="filter-bar" [ngClass]="{
+    'filter-bar--card': config.containerStyle === 'card',
+    'filter-bar--inline': config.containerStyle === 'inline',
+    'filter-bar--horizontal': config.layoutMode === 'horizontal',
+    'filter-bar--multi-row': config.layoutMode === 'multi-row'
+}">
+    <!-- Title and Clear Button Row -->
+    <div class="filter-bar__header" *ngIf="config.title || config.showClearButton">
+        <span class="filter-bar__title" *ngIf="config.title">{{ config.title }}</span>
+        <button mat-button color="primary" class="filter-bar__clear-btn" (click)="onClear()"
+            *ngIf="config.showClearButton">
+            {{ getClearButtonText() }}
+        </button>
+    </div>
+
+    <!-- Filter Fields -->
+    <div class="filter-bar__fields">
+        <ng-container *ngFor="let field of config.fields; trackBy: trackByFieldId">
+            <!-- Number Range Field -->
+            <div class="filter-bar__number-range" [style.width]="field.width || 'auto'"
+                *ngIf="field.type === 'number-range' && isNumberRangeField(field)">
+                <span class="filter-bar__range-label" *ngIf="field.rangeLabel">{{ field.rangeLabel }}</span>
+
+                <div class="filter-bar__range-inputs">
+                    <mat-form-field appearance="outline" class="filter-bar__range-input">
+                        <mat-label>{{ field.minLabel || 'Min' }}</mat-label>
+                        <input matInput type="number" [placeholder]="field.placeholder || '0'"
+                            [ngModel]="getFieldValue(field.id + '_min')"
+                            (ngModelChange)="onFieldChange(field.id + '_min', $event)" [min]="field.min ?? null"
+                            [max]="field.max ?? null" [step]="field.step ?? 1">
+                    </mat-form-field>
+
+                    <span class="filter-bar__range-separator">-</span>
+
+                    <mat-form-field appearance="outline" class="filter-bar__range-input">
+                        <mat-label>{{ field.maxLabel || 'Max' }}</mat-label>
+                        <input matInput type="number" [placeholder]="field.placeholder || '0'"
+                            [ngModel]="getFieldValue(field.id + '_max')"
+                            (ngModelChange)="onFieldChange(field.id + '_max', $event)" [min]="field.min ?? null"
+                            [max]="field.max ?? null" [step]="field.step ?? 1">
+                    </mat-form-field>
+
+                    <button mat-stroked-button class="filter-bar__range-apply" (click)="onApply()"
+                        *ngIf="config.applyMode === 'manual'">
+                        {{ field.applyButtonText || getApplyButtonText() }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Regular Fields (text, date, select, number) -->
+            <mat-form-field appearance="outline" class="filter-bar__field" [style.width]="field.width || '200px'"
+                *ngIf="field.type !== 'number-range'">
+                <mat-label *ngIf="field.label">{{ field.label }}</mat-label>
+
+                <mat-icon matPrefix *ngIf="field.icon">{{ field.icon }}</mat-icon>
+
+                <input matInput *ngIf="field.type === 'text'" [placeholder]="field.placeholder || ''"
+                    [ngModel]="getFieldValue(field.id)" (ngModelChange)="onFieldChange(field.id, $event)">
+
+                <input matInput type="date" *ngIf="field.type === 'date'" [placeholder]="field.placeholder || ''"
+                    [ngModel]="getFieldValue(field.id)" (ngModelChange)="onFieldChange(field.id, $event)">
+
+                <input matInput type="number" *ngIf="field.type === 'number'" [placeholder]="field.placeholder || ''"
+                    [ngModel]="getFieldValue(field.id)" (ngModelChange)="onFieldChange(field.id, $event)"
+                    [min]="field.min ?? null" [max]="field.max ?? null" [step]="field.step ?? 1">
+
+                <mat-select *ngIf="field.type === 'select'" [placeholder]="field.placeholder || ''"
+                    [ngModel]="getFieldValue(field.id)" (ngModelChange)="onFieldChange(field.id, $event)">
+                    <mat-option *ngFor="let option of field.options; trackBy: trackByOptionValue"
+                        [value]="option.value">{{ option.label }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+
+        <!-- Apply Button for Manual Mode (non-range fields) -->
+        <button mat-raised-button color="primary" class="filter-bar__apply-btn" (click)="onApply()"
+            *ngIf="config.applyMode === 'manual' && !hasNumberRangeField()">
+            {{ getApplyButtonText() }}
+        </button>
+    </div>
+</div>

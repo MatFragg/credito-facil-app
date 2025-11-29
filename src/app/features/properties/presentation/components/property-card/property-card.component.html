@@ -1,0 +1,51 @@
+<div class="property-card">
+    <!-- Property Image -->
+    <div class="card-image">
+        <img [src]="property.imageUrl || defaultImage" [alt]="property.propertyName || property.propertyCode">
+
+        <!-- Property Code Badge -->
+        <div class="code-badge">
+            {{ property.propertyCode }}
+        </div>
+
+        <!-- Status Badge -->
+        <div class="status-badge" [style.backgroundColor]="PropertyStatusColors[property.status]">
+            {{ PropertyStatusLabels[property.status] }}
+        </div>
+    </div>
+
+    <!-- Property Details -->
+    <div class="card-content">
+        <!-- Title -->
+        <h3 class="property-title">{{ property.propertyName || property.projectName }}</h3>
+
+        <!-- Summary -->
+        <p class="property-summary">{{ PropertyHelpers.getSummary(property) }}</p>
+
+        <!-- Location -->
+        <p class="property-location">
+            <mat-icon class="location-icon">location_on</mat-icon>
+            {{ property.district }}, {{ property.city }}
+        </p>
+
+        <!-- Price -->
+        <div class="property-price">
+            {{ PropertyHelpers.formatPrice(property.price) }}
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="card-actions">
+        <button mat-raised-button color="primary" class="view-button" (click)="onViewDetails()">
+            Ver Detalle
+        </button>
+
+        <button mat-icon-button matTooltip="Editar" (click)="onEdit()">
+            <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="onDelete()">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>

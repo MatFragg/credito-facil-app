@@ -1,4 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+/* 1. Importación de la fuente Inter (Mantenla siempre arriba) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* 2. Anulación de las Variables CSS de Angular Material (EL PASO CLAVE) */
+:root,
+.mat-typography,
+html,
+body {
+    /* Esto anula a Roboto en el nuevo sistema de Material 3 */
+    --mdc-typography-font-family: 'Inter', sans-serif !important;
+    --mat-card-title-text-font: 'Inter', sans-serif !important;
+    --mat-card-subtitle-text-font: 'Inter', sans-serif !important;
+    /* Esto anula a Roboto en el sistema clásico de Material */
+    --mat-typography-font-family: 'Inter', sans-serif !important;
+
+    /* Y esto fuerza la fuente en el DOM nativo */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+}
+
+.mat-mdc-outlined-button.mat-primary {
+    --mdc-outlined-button-label-text-color: #2563EB !important;
+    --mdc-outlined-button-outline-color: #2563EB !important;
+}
+
+.mat-mdc-outlined-button.mat-primary:hover {
+    background-color: #EFF6FF !important;
+}
+
+/* Additional specificity for stubborn buttons */
+button.mat-primary {
+    color: #2563EB !important;
+    border-color: #2563EB !important;
+}
+
+/* 3. Estilos de soporte general */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif !important;
+
+}
+
+.mat-card-title,
+.mat-card-subtitle,
+.mat-form-field,
+.mat-input-element,
+.mat-button,
+.mat-checkbox-label,
+.mat-select-value,
+.mat-dialog-container,
+.mat-list-item,
+.mat-tooltip {
+    font-family: 'Inter', sans-serif !important;
+}

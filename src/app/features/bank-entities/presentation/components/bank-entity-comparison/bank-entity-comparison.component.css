@@ -1,0 +1,165 @@
+.comparison-section {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-header {
+    margin-bottom: 1.5rem;
+}
+
+.comparison-header h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.subtitle {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.comparison-selectors {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.selector-card {
+    border: 2px dashed #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.selector-card:hover {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+.selector-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 0.5rem;
+    background-color: #dbeafe;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #3b82f6;
+}
+
+.selector-card label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.entity-select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    background-color: white;
+    cursor: pointer;
+}
+
+.entity-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.comparison-placeholder {
+    padding: 3rem;
+    text-align: center;
+    color: #6b7280;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    border: 2px dashed #e5e7eb;
+}
+
+.comparison-table-placeholder {
+    margin-top: 1.5rem;
+    padding: 2rem;
+    background-color: #fef3c7;
+    border: 2px dashed #f59e0b;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.comparison-table-placeholder p {
+    margin: 0.5rem 0;
+    color: #92400e;
+}
+
+.hint {
+    font-size: 0.875rem;
+    font-style: italic;
+}
+
+/* TODO: Add styles for your comparison table */
+.comparison-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.comparison-column {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.column-header {
+    background: #f3f4f6;
+    padding: 1rem;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.column-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    text-align: center;
+}
+
+.comparison-row {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f3f4f6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comparison-row:last-child {
+    border-bottom: none;
+}
+
+.row-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.row-value {
+    font-size: 0.875rem;
+    color: #111827;
+    font-weight: 600;
+}
+
+.row-value.rate {
+    color: #10b981;
+}

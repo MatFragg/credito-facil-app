@@ -1,0 +1,92 @@
+.bank-entities-card {
+    padding: 20px;
+    border-radius: 12px !important;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+    background-color: #feffff;
+}
+
+.card-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    color: #222;
+}
+
+.bank-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.bank-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    /* Reduced from 16px */
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.bank-item:last-child {
+    border-bottom: none;
+}
+
+.bank-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.bank-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+}
+
+.bank-detail {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.bank-badge {
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-green {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-yellow {
+    background-color: #fff8e1;
+    color: #fbc02d;
+}
+
+.card-footer {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #F3F4F6;
+}
+
+.full-width-btn {
+    width: 100%;
+    padding: 20px 0 !important;
+    font-weight: 500;
+}
+
+.view-all-btn {
+    width: 100% !important;
+    height: 44px !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    font-size: 0.9rem !important;
+    color: #2563EB !important;
+    /* Add this */
+    border-color: #2563EB !important;
+    /* Add this */
+}

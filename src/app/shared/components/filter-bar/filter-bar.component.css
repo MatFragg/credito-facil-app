@@ -1,0 +1,157 @@
+/* Base Filter Bar Styles */
+.filter-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+/* Container Styles */
+.filter-bar--card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Header Section */
+.filter-bar__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.filter-bar__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.filter-bar__clear-btn {
+    font-size: 14px;
+}
+
+/* Fields Container */
+.filter-bar__fields {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.filter-bar--horizontal .filter-bar__fields {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.filter-bar--multi-row .filter-bar__fields {
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+/* Individual Field */
+.filter-bar__field {
+    flex: 1;
+    min-width: 200px;
+    max-width: 280px;
+}
+
+/* Number Range Specific Styles */
+.filter-bar__number-range {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    flex-basis: 100%;
+    /* Force to new row in multi-row layout */
+}
+
+.filter-bar__range-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.filter-bar__range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+}
+
+.filter-bar__range-input {
+    flex: 1;
+    min-width: 140px;
+}
+
+.filter-bar__range-separator {
+    font-size: 18px;
+    color: #6b7280;
+    margin: 0 8px;
+    padding-top: 8px;
+}
+
+.filter-bar__range-apply {
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+/* Apply Button */
+.filter-bar__apply-btn {
+    align-self: flex-start;
+    margin-top: 8px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .filter-bar__fields {
+        flex-wrap: wrap;
+    }
+
+    .filter-bar__field {
+        flex: 1;
+        min-width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .filter-bar--card {
+        padding: 12px;
+    }
+
+    .filter-bar__fields {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-bar__field {
+        width: 100%;
+        max-width: none;
+    }
+
+    .filter-bar__header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .filter-bar__number-range {
+        width: 100%;
+    }
+
+    .filter-bar__range-inputs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-bar__range-separator {
+        display: none;
+    }
+
+    .filter-bar__range-apply {
+        width: 100%;
+    }
+}

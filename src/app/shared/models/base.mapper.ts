@@ -1,11 +1,10 @@
-import { BaseDto } from "./base.dto";
 import { BaseModel } from "./base.model";
 
-export interface BaseMapper<TModel extends BaseModel, TDto extends BaseDto> {
+export interface BaseMapper<TModel extends BaseModel, TDtoRequest, TDtoResponse> {
 
-    toModelFromDto(dto: TDto): TModel;
-    toCreateDtoFromModel(model: TModel): TDto;
-    toUpdateDtoFromModel(model: TModel): TDto;
-    toModelsArrayFromDto(dtos: TDto[]): TModel[];
-    toResponseDto(model: TModel): TDto;
+    toModelFromDto(dto: TDtoResponse): TModel;
+    toCreateDtoFromModel(model: TModel): TDtoRequest;
+    toUpdateDtoFromModel(model: TModel): TDtoRequest;
+    toModelsArrayFromDto(dtos: TDtoResponse[]): TModel[];
+    toResponseDto(model: TModel): TDtoResponse;
 }

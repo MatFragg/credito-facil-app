@@ -1,0 +1,231 @@
+<div class="create-property-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="property-form">
+
+        <!-- Main Form Card -->
+        <div class="form-card">
+
+            <!-- Client Selection Section -->
+            <section class="form-section">
+                <h3 class="section-title">
+                    <mat-icon>person</mat-icon>
+                    Seleccionar Cliente
+                </h3>
+                <p class="section-subtitle">Busca y selecciona el cliente para esta propiedad *</p>
+
+                <!-- Client Autocomplete -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Cliente</mat-label>
+                    <input matInput placeholder="Buscar por nombre o DNI..." formControlName="clientSearch"
+                        [matAutocomplete]="clientAuto">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-error *ngIf="form.get('clientId')?.hasError('required')">
+                        Cliente es requerido
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-autocomplete #clientAuto="matAutocomplete" [displayWith]="displayClient.bind(this)"
+                    (optionSelected)="onClientSelected($event.option.value)">
+                    <mat-option *ngFor="let client of filteredClients$ | async" [value]="client">
+                        <div class="client-option">
+                            <strong>{{ client.firstName }} {{ client.lastName || '' }}</strong>
+                            <span *ngIf="client.dni" class="client-dni">DNI: {{ client.dni }}</span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+
+                <!-- Selected Client Indicator -->
+                <div *ngIf="selectedClient" class="selected-client-indicator">
+                    ✓ Cliente seleccionado: <strong>{{ selectedClient.firstName }} {{ selectedClient.lastName || ''
+                        }}</strong>
+                    <span *ngIf="selectedClient.dni">(DNI: {{ selectedClient.dni }})</span>
+                </div>
+            </section>
+
+            <!-- Property Information Section -->
+            <section class="form-section">
+                <h3 class="section-title">
+                    <mat-icon>home</mat-icon>
+                    Información de la Vivienda
+                </h3>
+                <p class="section-subtitle">Complete todos los campos obligatorios para registrar la propiedad</p>
+
+                <div class="form-grid">
+                    <!-- Property Name -->
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Nombre de la Propiedad</mat-label>
+                        <input matInput formControlName="propertyName" placeholder="Ej: Residencial Los Olivos">
+                    </mat-form-field>
+
+                    <!-- Project Name -->
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Nombre del Proyecto</mat-label>
+                        <input matInput formControlName="projectName" placeholder="Ej: Condominio Vista Hermosa">
+                    </mat-form-field>
+
+                    <!-- Property Type -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tipo de Vivienda *</mat-label>
+                        <mat-select formControlName="propertyType">
+                            @for (type of propertyTypes; track type.value) {
+                            <mat-option [value]="type.value">{{ type.label }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- Status -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Estado</mat-label>
+                        <mat-select formControlName="status">
+                            @for (status of propertyStatuses; track status.value) {
+                            <mat-option [value]="status.value">{{ status.label }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- Price -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Precio (S/) *</mat-label>
+                        <input matInput type="number" formControlName="price" placeholder="0.00">
+                        <span matPrefix>S/ &nbsp;</span>
+                    </mat-form-field>
+
+                    <!-- Area -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Área Total (m²)</mat-label>
+                        <input matInput type="number" formControlName="area" placeholder="0">
+                        <span matSuffix>&nbsp; m²</span>
+                    </mat-form-field>
+
+                    <!-- Bedrooms -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Número de Dormitorios</mat-label>
+                        <mat-select formControlName="bedrooms">
+                            @for (num of bedroomOptions; track num) {
+                            <mat-option [value]="num">{{ num }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- Bathrooms -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Número de Baños</mat-label>
+                        <mat-select formControlName="bathrooms">
+                            @for (num of bathroomOptions; track num) {
+                            <mat-option [value]="num">{{ num }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- Parking Spaces -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Estacionamientos</mat-label>
+                        <mat-select formControlName="parkingSpaces">
+                            @for (num of parkingOptions; track num) {
+                            <mat-option [value]="num">{{ num }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- Age Years -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Antigüedad (años)</mat-label>
+                        <input matInput type="number" formControlName="ageYears" placeholder="0">
+                    </mat-form-field>
+                </div>
+            </section>
+
+            <!-- Location Section -->
+            <section class="form-section">
+                <h3 class="section-title">
+                    <mat-icon>location_on</mat-icon>
+                    Ubicación
+                </h3>
+                <p class="section-subtitle">Dirección completa de la vivienda</p>
+
+                <div class="form-grid">
+                    <!-- Address -->
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Dirección</mat-label>
+                        <input matInput formControlName="address" placeholder="Calle, número, urbanización">
+                    </mat-form-field>
+
+                    <!-- District -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Distrito</mat-label>
+                        <input matInput formControlName="district" placeholder="Miraflores">
+                    </mat-form-field>
+
+                    <!-- Province -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Provincia</mat-label>
+                        <input matInput formControlName="province">
+                    </mat-form-field>
+
+                    <!-- City -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ciudad</mat-label>
+                        <input matInput formControlName="city">
+                    </mat-form-field>
+                </div>
+            </section>
+
+            <!-- Image Upload Section -->
+            <section class="form-section">
+                <h3 class="section-title">
+                    <mat-icon>image</mat-icon>
+                    Imagen Principal
+                </h3>
+                <p class="section-subtitle">Haz clic para subir una imagen (PNG, JPG, WEBP - Max 5MB)</p>
+
+                <div class="image-upload-container">
+                    <input type="file" id="imageInput" accept="image/*" (change)="onImageSelected($event)"
+                        style="display: none;">
+
+                    @if (!imagePreview) {
+                    <div class="upload-placeholder" (click)="triggerFileInput()">
+                        <mat-icon>cloud_upload</mat-icon>
+                        <p>Haz clic para subir una imagen</p>
+                        <span>PNG, JPG, WEBP (Max 5MB)</span>
+                    </div>
+                    } @else {
+                    <div class="image-preview">
+                        <img [src]="imagePreview" alt="Preview">
+                        <button type="button" mat-mini-fab color="warn" class="remove-image" (click)="removeImage()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                    }
+                </div>
+            </section>
+
+            <!-- Description Section -->
+            <section class="form-section">
+                <h3 class="section-title">
+                    <mat-icon>description</mat-icon>
+                    Descripción Adicional
+                </h3>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Información adicional sobre la vivienda</mat-label>
+                    <textarea matInput formControlName="description" rows="4"
+                        placeholder="Información adicional sobre la vivienda, acabados, ubicación, etc."></textarea>
+                </mat-form-field>
+            </section>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" mat-button (click)="onCancel()" [disabled]="facade.saving()">
+                    <mat-icon>close</mat-icon>
+                    Cancelar
+                </button>
+
+                <div class="action-buttons-right">
+                    <button type="submit" mat-raised-button color="primary" [disabled]="facade.saving()">
+                        <mat-icon>save</mat-icon>
+                        {{ facade.saving() ? 'Guardando...' : 'Registrar Vivienda' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

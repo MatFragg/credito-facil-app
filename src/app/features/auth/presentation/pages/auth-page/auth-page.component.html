@@ -1,0 +1,10 @@
+<div class="auth-container">
+
+  @if (isLoginView) {
+  <app-login-form (toggleView)="toggleView()">
+  </app-login-form>
+  } @else {
+  <app-register-form (toggleView)="toggleView()">
+  </app-register-form>
+  }
+</div>

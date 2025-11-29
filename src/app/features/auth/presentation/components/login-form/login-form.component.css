@@ -1,0 +1,131 @@
+.login-card {
+  width: 100%;
+  width: 448px;
+  padding: 0 20px;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+  /* Apilar los elementos verticalmente */
+  align-items: center;
+  /* Centrar horizontalmente los elementos hijos */
+  padding-bottom: 0;
+  /* Eliminar the padding inferior por defecto si lo tiene */
+  margin-bottom: 16px;
+  /* Espacio entre el header y el formulario */
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.form-subtitle {
+  text-align: center;
+  margin-top: 0;
+  color: #475569;
+  /* Color gris para el subtítulo */
+  font-size: 0.9em;
+  margin-bottom: 8px;
+  /* Espacio entre el subtítulo y el formulario */
+  font-weight: 400;
+}
+
+.icon-badge {
+  /* Fondo azul */
+  background-color: #1a73e8;
+  /* O el color azul específico que desees */
+  /* Hacerlo circular */
+  border-radius: 12px;
+  /* Definir un tamaño fijo para el círculo */
+  width: 60px;
+  /* Ajusta según el tamaño deseado */
+  height: 60px;
+  /* Igual que el ancho para que sea un círculo perfecto */
+  /* Centrar el icono SVG dentro del círculo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Margen inferior para separarlo del título */
+  margin: 20px auto 20px auto;
+  /* Centrar horizontalmente y darle margen inferior */
+}
+
+.login-icon-svg {
+  /* Color blanco para el icono */
+  color: white;
+  /* Tamaño del icono SVG dentro del badge */
+  width: 32px;
+  /* Ajusta el tamaño del icono dentro del círculo */
+  height: 32px;
+}
+
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+
+.forgot-link {
+  color: #3B82F6;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.togglelink {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.toggle-link a {
+  color: #3B82F6;
+  font-weight: bold;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.form-error {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  background-color: #3B82F6;
+  color: white;
+  width: 376px;
+  font-weight: 500;
+  border: 1px solid #3B82F6;
+  border-radius: 8px;
+  height: 48px;
+}
+
+.submit-button:hover {
+  background-color: #2563EB;
+  border-color: #2563EB;
+}
+
+/* Turnstile container styling */
+.turnstile-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 65px;
+}

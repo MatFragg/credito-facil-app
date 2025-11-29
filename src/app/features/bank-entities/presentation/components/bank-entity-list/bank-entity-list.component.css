@@ -1,0 +1,220 @@
+.bank-entity-list {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid #E5E7EB !important;
+    overflow: hidden;
+}
+
+.table-header {
+    padding: 1.5rem;
+    background-color: #fff;
+    border-bottom: 1px solid #E5E7EB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.table-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.table-container {
+    overflow-x: auto;
+    background-color: #fff;
+}
+
+.entities-table {
+    width: 100%;
+}
+
+.entity-row:hover {
+    background-color: #E5E7EB;
+}
+
+.entity-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Bank Entity Badges */
+.entity-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: white;
+}
+
+.badge-bcp {
+    background-color: #1e3a8a;
+}
+
+.badge-bbva {
+    background-color: #0284c7;
+}
+
+.badge-scotiabank {
+    background-color: #dc2626;
+}
+
+.badge-interbank {
+    background-color: #10b981;
+}
+
+.badge-pichincha {
+    background-color: #f97316;
+}
+
+.badge-default {
+    background-color: #6b7280;
+}
+
+.entity-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.entity-name {
+    font-weight: 600;
+    color: #111827;
+    font-size: 0.9375rem;
+}
+
+.entity-subtitle {
+    font-size: 0.8125rem;
+    color: #6b7280;
+}
+
+/* Rate Badges */
+.rate-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    display: inline-block;
+}
+
+.rate-badge.rate-low {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.rate-badge.rate-medium {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.rate-badge.rate-high {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Action Icons */
+.action-buttons {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.action-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.action-icon mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.edit-icon {
+    color: #3b82f6;
+}
+
+.edit-icon:hover {
+    background-color: #dbeafe;
+}
+
+.view-icon {
+    color: #10b981;
+}
+
+.view-icon:hover {
+    background-color: #d1fae5;
+}
+
+.compare-icon {
+    color: #f59e0b;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paginator-info {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Table cells styling */
+::ng-deep .mat-mdc-table {
+    background: transparent;
+}
+
+::ng-deep .mat-mdc-header-cell {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem 0.75rem;
+}
+
+::ng-deep .mat-mdc-cell {
+    padding: 1rem 0.75rem;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+::ng-deep .mat-mdc-row {
+    border-bottom: 1px solid #E5E7EB;
+}
+
+::ng-deep .mat-mdc-row:last-child {
+    border-bottom: none;
+}
+
+/* Remove MatChip if not used in template */
+mat-chip {
+    font-weight: 600;
+}
+
+mat-chip.rate-low {
+    background-color: #d1fae5 !important;
+    color: #065f46 !important;
+}
+
+mat-chip.rate-medium {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+}
+
+mat-chip.rate-high {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+}

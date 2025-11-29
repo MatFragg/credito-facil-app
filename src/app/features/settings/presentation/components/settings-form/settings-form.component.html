@@ -1,0 +1,138 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="settings-form">
+
+    <!-- Single White Container for All Settings -->
+    <div class="settings-container-white">
+
+        <!-- Currency Section -->
+        <div class="settings-section">
+            <div class="section-header">
+                <mat-icon class="section-icon currency-icon">attach_money</mat-icon>
+                <h3>Configuración de Moneda</h3>
+            </div>
+
+            <div class="form-row">
+                <div class="field-label-group">
+                    <label class="field-label">Moneda por defecto</label>
+                    <p class="field-description">Selecciona la moneda principal para las simulaciones</p>
+                </div>
+
+                <div class="toggle-switch-group">
+                    <button type="button" class="toggle-option"
+                        [class.active]="form.get('currency')?.value === Currency.PEN"
+                        (click)="form.patchValue({ currency: Currency.PEN })">
+                        Soles (S/)
+                    </button>
+                    <button type="button" class="toggle-option"
+                        [class.active]="form.get('currency')?.value === Currency.USD"
+                        (click)="form.patchValue({ currency: Currency.USD })">
+                        Dólares ($)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interest Rate Section -->
+        <div class="settings-section">
+            <div class="section-header">
+                <mat-icon class="section-icon rate-icon">show_chart</mat-icon>
+                <h3>Configuración de Tasa de Interés</h3>
+            </div>
+
+            <div class="form-row">
+                <div class="field-label-group">
+                    <label class="field-label">Tipo de tasa</label>
+                    <p class="field-description">Define si la tasa es nominal o efectiva</p>
+                </div>
+
+                <div class="toggle-switch-group">
+                    <button type="button" class="toggle-option"
+                        [class.active]="form.get('interestRateType')?.value === InterestRateType.NOMINAL"
+                        (click)="form.patchValue({ interestRateType: InterestRateType.NOMINAL })">
+                        Nominal
+                    </button>
+                    <button type="button" class="toggle-option"
+                        [class.active]="form.get('interestRateType')?.value === InterestRateType.EFFECTIVE"
+                        (click)="form.patchValue({ interestRateType: InterestRateType.EFFECTIVE })">
+                        Efectiva
+                    </button>
+                </div>
+            </div>
+
+            <!-- Capitalization Dropdown (conditional) -->
+            @if (showCapitalization()) {
+            <div class="capitalize-field">
+                <label class="field-label">Capitalización (solo para tasa nominal)</label>
+
+                <mat-form-field appearance="outline" class="custom-select">
+                    <mat-select formControlName="capitalization" placeholder="Seleccione">
+                        @for (option of capitalizationOptions; track option.value) {
+                        <mat-option [value]="option.value">
+                            {{ option.label }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            }
+        </div>
+
+        <!-- Grace Period Section -->
+        <div class="settings-section">
+            <div class="section-header">
+                <mat-icon class="section-icon grace-icon">calendar_month</mat-icon>
+                <h3>Configuración de Período de Gracia</h3>
+            </div>
+
+            <div class="form-field-full">
+                <label class="field-label">Tipo de período de gracia</label>
+
+                <mat-form-field appearance="outline" class="custom-select">
+                    <mat-select formControlName="gracePeriodType" placeholder="Seleccione">
+                        @for (option of gracePeriodOptions; track option.value) {
+                        <mat-option [value]="option.value">
+                            {{ option.label }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- System Configuration Section -->
+        <div class="settings-section">
+            <div class="section-header">
+                <mat-icon class="section-icon system-icon">settings</mat-icon>
+                <h3>Configuración del Sistema</h3>
+            </div>
+
+            <div class="form-field-full">
+                <label class="field-label">Meses de gracia</label>
+
+                <mat-form-field appearance="outline" class="custom-input">
+                    <input matInput type="number" formControlName="graceMonths" min="0" max="60" placeholder="0">
+                    <mat-hint>Máximo 60 meses</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+            <button type="button" mat-button class="reset-button" (click)="onReset()" [disabled]="saving">
+                <mat-icon>restart_alt</mat-icon>
+                Restablecer valores por defecto
+            </button>
+
+            <div class="action-buttons-right">
+                <button type="button" mat-stroked-button class="cancel-button" (click)="onCancel()" [disabled]="saving">
+                    Cancelar
+                </button>
+                <button type="submit" mat-raised-button color="primary" class="save-button"
+                    [disabled]="form.invalid || saving">
+                    <mat-icon>save</mat-icon>
+                    {{ saving ? 'Guardando...' : 'Guardar Configuración' }}
+                </button>
+            </div>
+        </div>
+
+    </div>
+</form>

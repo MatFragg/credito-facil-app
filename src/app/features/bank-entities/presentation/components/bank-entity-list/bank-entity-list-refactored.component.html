@@ -1,0 +1,12 @@
+<mat-card class="bank-list-card">
+    <div class="card-header">
+        <h2>Listado de Entidades Bancarias</h2>
+        <p class="header-subtitle">
+            {{ entities.length }} {{ entities.length === 1 ? 'entidad encontrada' : 'entidades encontradas' }}
+        </p>
+    </div>
+
+    <app-data-table [columns]="columns" [data]="entities" [config]="tableConfig" [isLoading]="isLoading"
+        [actions]="actions">
+    </app-data-table>
+</mat-card>

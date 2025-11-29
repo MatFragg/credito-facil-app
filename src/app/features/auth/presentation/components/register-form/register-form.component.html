@@ -1,0 +1,100 @@
+<mat-card class="register-card">
+  <mat-card-header class="register-header">
+    <div class="icon-badge">
+      <svg class="register-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+        <path fill="currentColor"
+          d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM504 312l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+      </svg>
+    </div>
+    <div>
+      <mat-card-title class="form-title">Crear Cuenta</mat-card-title>
+      <mat-card-subtitle class="form-subtitle">Únete a CreditoFácil</mat-card-subtitle>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form class="register-form-container" [formGroup]="form" (submit)="onSubmit()">
+
+      @if (form.hasError('registrationError')) {
+      <mat-error class="form-error">
+        Error al crear la cuenta. Por favor, intenta nuevamente.
+      </mat-error>
+      }
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput placeholder="Juan" formControlName="firstName" type="text">
+          @if (isInvalidControl(form, 'firstName')) {
+          <mat-error>{{ errorMessagesForControl(form, 'firstName') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Apellido</mat-label>
+          <input matInput placeholder="Pérez" formControlName="lastName" type="text">
+          @if (isInvalidControl(form, 'lastName')) {
+          <mat-error>{{ errorMessagesForControl(form, 'lastName') }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre de Usuario</mat-label>
+        <input matInput placeholder="juanperez" formControlName="username" type="text">
+        @if (isInvalidControl(form, 'username')) {
+        <mat-error>{{ errorMessagesForControl(form, 'username') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput placeholder="usuario@ejemplo.com" formControlName="email" type="email">
+        @if (isInvalidControl(form, 'email')) {
+        <mat-error>{{ errorMessagesForControl(form, 'email') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password" type="password">
+        @if (isInvalidControl(form, 'password')) {
+        <mat-error>{{ errorMessagesForControl(form, 'password') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirmar Contraseña</mat-label>
+        <input matInput formControlName="confirmPassword" type="password">
+        @if (isInvalidControl(form, 'confirmPassword')) {
+        <mat-error>{{ errorMessagesForControl(form, 'confirmPassword') }}</mat-error>
+        }
+        @if (form.get('confirmPassword')?.hasError('passwordMismatch')) {
+        <mat-error>Las contraseñas no coinciden</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Turnstile Widget Container -->
+      <div #turnstileContainer class="turnstile-container"></div>
+
+      @if (form.hasError('turnstileValidation')) {
+      <mat-error class="form-error">
+        Error de validación. Por favor, inténtalo de nuevo.
+      </mat-error>
+      }
+
+      <button class="submit-button" type="submit" [disabled]="isSubmitting">
+        @if (isSubmitting) {
+        <span>Creando cuenta...</span>
+        } @else {
+        <span>Registrarse</span>
+        }
+      </button>
+
+      <div class="toggle-link">
+        <span>¿Ya tienes una cuenta? </span>
+        <a (click)="toggleView.emit()">Inicia sesión aquí</a>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

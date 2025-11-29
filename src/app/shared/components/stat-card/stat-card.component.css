@@ -1,0 +1,78 @@
+.stat-card {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 16px;
+    border-radius: 12px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+    background-color: #FFFFFF;
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #9CA3AF;
+    margin: 0;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.stat-delta {
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.green-delta {
+    color: #10B981;
+}
+
+.delta-text {
+    color: #9CA3AF;
+}
+
+.stat-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.stat-icon-container mat-icon {
+    font-size: 28px;
+    color: white;
+}
+
+.blue-bg {
+    background-color: #4e79ff;
+}
+
+.lightgreen-bg {
+    background-color: #50b65f;
+}
+
+.yellow-bg {
+    background-color: #ffc107;
+}
+
+.purple-bg {
+    background-color: #9c27b0;
+}

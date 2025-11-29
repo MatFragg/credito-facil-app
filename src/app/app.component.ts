@@ -9,4 +9,9 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'credito-app';
+
+
+  constructor() {
+    console.log('AppComponent ctor'); // temporal
+  }
 }

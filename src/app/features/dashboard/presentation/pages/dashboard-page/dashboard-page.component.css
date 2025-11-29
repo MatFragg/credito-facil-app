@@ -1,0 +1,33 @@
+.dashboard-container {
+  padding: 36px;
+  background-color: #f9fbfb;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.dashboard-content {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.middle-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+}
+
+.bottom-row {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 36px;
+}
+
+@media (max-width: 900px) {
+
+  .middle-row,
+  .bottom-row {
+    grid-template-columns: 1fr;
+  }
+}

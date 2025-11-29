@@ -1,0 +1,78 @@
+<div class="comparison-section">
+    <div class="comparison-header">
+        <h3>Comparador de Entidades</h3>
+        <p class="subtitle">Selecciona hasta 3 entidades para comparar sus tasas y requisitos</p>
+    </div>
+
+    <div class="comparison-selectors">
+        <div class="selector-card">
+            <div class="selector-icon">+</div>
+            <label>Seleccionar Entidad 1</label>
+            <select class="entity-select" [(ngModel)]="selectedEntity1" (ngModelChange)="onSelectionChange()">
+                <option [ngValue]="null">Elegir entidad...</option>
+                <option *ngFor="let entity of availableEntities" [ngValue]="entity">
+                    {{ entity.name }}
+                </option>
+            </select>
+        </div>
+
+        <div class="selector-card">
+            <div class="selector-icon">+</div>
+            <label>Seleccionar Entidad 2</label>
+            <select class="entity-select" [(ngModel)]="selectedEntity2" (ngModelChange)="onSelectionChange()">
+                <option [ngValue]="null">Elegir entidad...</option>
+                <option *ngFor="let entity of availableEntities" [ngValue]="entity">
+                    {{ entity.name }}
+                </option>
+            </select>
+        </div>
+
+        <div class="selector-card">
+            <div class="selector-icon">+</div>
+            <label>Seleccionar Entidad 3</label>
+            <select class="entity-select" [(ngModel)]="selectedEntity3" (ngModelChange)="onSelectionChange()">
+                <option [ngValue]="null">Elegir entidad...</option>
+                <option *ngFor="let entity of availableEntities" [ngValue]="entity">
+                    {{ entity.name }}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <!--
+    🎯 TODO CHALLENGE #2: Build the comparison table here
+
+    Display comparisonEntities in a table format:
+    - Column for each selected entity
+    - Rows for: Name, Current Rate, Min Income, Initial Fee
+    - Style the best values (lowest rate, etc.)
+
+    Example structure:
+  -->
+
+    <div class="comparison-table" *ngIf="comparisonEntities().length > 0">
+        <div class="comparison-column" *ngFor="let entity of comparisonEntities()">
+            <div class="column-header">
+                <h4>{{ entity.name }}</h4>
+            </div>
+
+            <div class="comparison-row">
+                <span class="row-label">Tasa Actual:</span>
+                <span class="row-value rate">{{ entity.currentRate.toFixed(2) }}%</span>
+            </div>
+
+            <div class="comparison-row">
+                <span class="row-label">Ingreso Mínimo:</span>
+                <span class="row-value">S/ {{ entity.minimunIncome.toLocaleString() }}</span>
+            </div>
+
+            <div class="comparison-row">
+                <span class="row-label">Cobertura Máx:</span>
+                <span class="row-value">{{ entity.maxCoveragePct }}%</span>
+            </div>
+        </div>
+    </div>
+    <div class="comparison-placeholder" *ngIf="!hasSelection()">
+        <p>👆 Selecciona al menos 2 entidades para comenzar la comparación</p>
+    </div>
+</div>

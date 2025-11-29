@@ -1,0 +1,5 @@
+<div class="stats-container">
+    @for (stat of stats(); track stat.label) {
+    <app-stat-card [data]="stat" />
+    }
+</div>

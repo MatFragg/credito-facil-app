@@ -1,0 +1,313 @@
+.settings-form {
+    max-width: 720px;
+    margin: 24px auto;
+    padding: 0 20px;
+}
+
+/* Single White Container */
+.settings-container-white {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+/* Settings Section */
+.settings-section {
+    padding: 24px 28px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.settings-section:last-of-type {
+    border-bottom: none;
+}
+
+/* Section Header */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.section-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.currency-icon {
+    color: #3b82f6;
+}
+
+.rate-icon {
+    color: #10b981;
+}
+
+.grace-icon {
+    color: #a855f7;
+}
+
+.system-icon {
+    color: #6b7280;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Form Row - Label on Left, Toggle on Right */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.field-label-group {
+    flex: 1;
+}
+
+.field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.field-description {
+    font-size: 12px;
+    color: #9ca3af;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Toggle Switch Group - On the Right */
+.toggle-switch-group {
+    display: flex;
+    gap: 0;
+    background: #f9fafb;
+    padding: 3px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    flex-shrink: 0;
+}
+
+.toggle-option {
+    padding: 8px 24px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.toggle-option:hover:not(.active) {
+    color: #374151;
+}
+
+.toggle-option.active {
+    background: white;
+    color: #111827;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Capitalization Field with Light Blue Background */
+.capitalize-field {
+    background: #eff6ff;
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+
+.capitalize-field .field-label {
+    font-size: 12px;
+    color: #1e40af;
+    margin-bottom: 8px;
+}
+
+/* Full Width Form Fields (for dropdowns) */
+.form-field-full {
+    margin-top: 0;
+}
+
+.form-field-full .field-label {
+    font-size: 13px;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+/* Custom Material Select & Input */
+.custom-select,
+.custom-input {
+    width: 100%;
+}
+
+::ng-deep .custom-select .mat-mdc-form-field-flex,
+::ng-deep .custom-input .mat-mdc-form-field-flex {
+    background-color: #fafafa;
+    border-radius: 8px;
+}
+
+::ng-deep .custom-select .mat-mdc-text-field-wrapper,
+::ng-deep .custom-input .mat-mdc-text-field-wrapper {
+    padding: 0;
+}
+
+::ng-deep .custom-select .mdc-notched-outline__leading,
+::ng-deep .custom-select .mdc-notched-outline__notch,
+::ng-deep .custom-select .mdc-notched-outline__trailing,
+::ng-deep .custom-input .mdc-notched-outline__leading,
+::ng-deep .custom-input .mdc-notched-outline__notch,
+::ng-deep .custom-input .mdc-notched-outline__trailing {
+    border-color: #e5e7eb;
+}
+
+::ng-deep .custom-select:hover .mdc-notched-outline__leading,
+::ng-deep .custom-select:hover .mdc-notched-outline__notch,
+::ng-deep .custom-select:hover .mdc-notched-outline__trailing,
+::ng-deep .custom-input:hover .mdc-notched-outline__leading,
+::ng-deep .custom-input:hover .mdc-notched-outline__notch,
+::ng-deep .custom-input:hover .mdc-notched-outline__trailing {
+    border-color: #d1d5db;
+}
+
+::ng-deep .mat-mdc-form-field-hint {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+
+::ng-deep .mat-mdc-select-value,
+::ng-deep .mat-mdc-input-element {
+    font-size: 13px;
+    color: #111827;
+}
+
+::ng-deep .mat-mdc-select-placeholder {
+    color: #9ca3af;
+    opacity: 0.6;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 28px;
+    background: #fafafa;
+    border-top: 1px solid #f3f4f6;
+}
+
+.action-buttons-right {
+    display: flex;
+    gap: 10px;
+}
+
+/* Reset Button */
+.reset-button {
+    color: #6b7280;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.reset-button mat-icon {
+    margin-right: 6px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.reset-button:hover {
+    color: #374151;
+    background: #f3f4f6;
+}
+
+/* Cancel Button */
+.cancel-button {
+    color: #6b7280;
+    border-color: #d1d5db;
+    font-weight: 500;
+    font-size: 13px;
+    padding: 0 20px;
+}
+
+.cancel-button:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    color: #374151;
+}
+
+/* Save Button */
+.save-button {
+    background: #3b82f6;
+    color: white;
+    font-weight: 500;
+    font-size: 13px;
+    padding: 0 24px;
+}
+
+.save-button mat-icon {
+    margin-right: 6px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+.save-button:hover:not(:disabled) {
+    background: #2563eb;
+}
+
+.save-button:disabled {
+    background: #d1d5db;
+    color: #9ca3af;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .settings-form {
+        padding: 0 12px;
+    }
+
+    .settings-section {
+        padding: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .toggle-switch-group {
+        width: 100%;
+    }
+
+    .toggle-option {
+        flex: 1;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .action-buttons-right {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .reset-button {
+        width: 100%;
+        justify-content: center;
+    }
+}

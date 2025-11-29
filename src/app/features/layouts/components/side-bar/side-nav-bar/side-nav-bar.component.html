@@ -1,0 +1,36 @@
+<app-side-nav-bar-header />
+
+<mat-nav-list>
+  <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+    <mat-icon>home</mat-icon>
+    <span>Inicio</span>
+  </a>
+  <a mat-list-item routerLink="/clients" routerLinkActive="active-link">
+    <mat-icon>group</mat-icon>
+    <span>Clientes</span>
+  </a>
+  <a mat-list-item routerLink="/properties" routerLinkActive="active-link">
+    <mat-icon>domain</mat-icon> <span>Viviendas</span>
+  </a>
+  <a mat-list-item routerLink="/simulations/calculator" routerLinkActive="active-link">
+    <mat-icon>calculate</mat-icon> <span>Simulador</span>
+  </a>
+  <a mat-list-item routerLink="/bank-entities" routerLinkActive="active-link">
+    <mat-icon>account_balance</mat-icon>
+    <span>Entidades</span>
+  </a>
+  <a mat-list-item routerLink="/simulations" routerLinkActive="active-link">
+    <mat-icon>history</mat-icon>
+    <span>Historial</span>
+  </a>
+  <a mat-list-item routerLink="/settings" routerLinkActive="active-link">
+    <mat-icon>settings</mat-icon>
+    <span>Configuración</span>
+  </a>
+</mat-nav-list>
+
+<hr class="separator">
+
+<a mat-list-item class="logout-link" (click)="logout()"> <mat-icon>exit_to_app</mat-icon>
+  <span>Salir</span>
+</a>

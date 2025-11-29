@@ -1,0 +1,24 @@
+<div class="settings-page-container">
+    <!-- Error Display (only for real errors, not 404) -->
+    @if (facade.error() && !facade.error()!.includes('404')) {
+    <div class="error-banner">
+        {{ facade.error() }}
+    </div>
+    }
+    <!-- Info Message when no settings exist -->
+    @if (!facade.currentSettings() && !facade.loading()) {
+    <div class="info-banner">
+        <span>No tienes configuraciones guardadas. Completa el formulario para crear tu primera configuración.</span>
+    </div>
+    }
+    <!-- Loading State -->
+    @if (facade.loading()) {
+    <div class="loading-container">
+        <p>Cargando configuraciones...</p>
+    </div>
+    }
+    <!-- Settings Form (always show) -->
+    <app-settings-form [settings]="facade.currentSettings()" [saving]="facade.saving()" (save)="onSettingsSaved($event)"
+        (reset)="onResetToDefaults()">
+    </app-settings-form>
+</div>

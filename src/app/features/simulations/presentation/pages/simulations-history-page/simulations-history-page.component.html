@@ -1,0 +1,51 @@
+<div class="history-container">
+    <!-- Filters Section -->
+    <app-filter-bar [config]="filterConfig" (filterChange)="onFilterChange($event)" (clearFilters)="onClearFilters()">
+    </app-filter-bar>
+
+    <!-- Stats Cards -->
+    <app-stats-cards [stats]="statsCards"></app-stats-cards>
+
+    <!-- Simulations Table Section -->
+    <div class="table-section">
+        <div class="section-header">
+            <h2 class="section-title">Simulaciones Recientes</h2>
+            <div class="section-actions">
+                <button mat-stroked-button [matMenuTriggerFor]="exportMenu">
+                    <mat-icon>download</mat-icon>
+                    Exportar
+                </button>
+                <mat-menu #exportMenu="matMenu">
+                    <button mat-menu-item (click)="onExport('pdf')">
+                        <mat-icon>picture_as_pdf</mat-icon>
+                        <span>Exportar como PDF</span>
+                    </button>
+                    <button mat-menu-item (click)="onExport('excel')">
+                        <mat-icon>table_chart</mat-icon>
+                        <span>Exportar como Excel</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <app-data-table [columns]="tableColumns" [data]="simulations" [config]="tableConfig" [isLoading]="isLoading"
+            [actions]="tableActions">
+        </app-data-table>
+    </div>
+
+    <!-- Call-to-Action Banner -->
+    <div class="cta-banner">
+        <div class="cta-content">
+            <mat-icon class="cta-icon">insights</mat-icon>
+            <div class="cta-text">
+                <h3>¿Necesitas realizar una nueva simulación?</h3>
+                <p>Crea simulaciones rápidas y precisas con nuestro sistema optimizado</p>
+            </div>
+        </div>
+        <button mat-raised-button color="primary" (click)="onNewSimulation()">
+            <mat-icon>add_circle</mat-icon>
+            Nuevo Simulador
+        </button>
+    </div>
+</div>

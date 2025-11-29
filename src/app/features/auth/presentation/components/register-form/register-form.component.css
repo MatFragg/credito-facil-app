@@ -1,0 +1,117 @@
+.register-card {
+  width: 100%;
+  max-width: 480px;
+  padding: 0 20px;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.register-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 0;
+  margin-bottom: 16px;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.form-subtitle {
+  text-align: center;
+  margin-top: 0;
+  color: #475569;
+  font-size: 0.9em;
+  margin-bottom: 8px;
+  font-weight: 400;
+}
+
+.icon-badge {
+  background-color: #10b981;
+  border-radius: 12px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto 20px auto;
+}
+
+.register-icon-svg {
+  color: white;
+  width: 32px;
+  height: 32px;
+}
+
+.register-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.half-width {
+  flex: 1;
+  min-width: 0;
+}
+
+.toggle-link {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.toggle-link a {
+  color: #3B82F6;
+  font-weight: bold;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.form-error {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  background-color: #10b981;
+  color: white;
+  width: 100%;
+  font-weight: 500;
+  border: 1px solid #10b981;
+  border-radius: 8px;
+  height: 48px;
+  margin-top: 8px;
+}
+
+.submit-button:hover {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+.submit-button:disabled {
+  background-color: #9CA3AF;
+  border-color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+/* Turnstile container styling */
+.turn stile-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 65px;
+}

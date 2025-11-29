@@ -1,0 +1,240 @@
+<div class="calculator-container">
+    <!-- Header -->
+    <div class="calculator-header">
+        <h2>Simulador de Crédito</h2>
+        <p class="subtitle">Calcula tu crédito hipotecario con el método francés</p>
+    </div>
+
+    <!-- Calculator Form -->
+    <form [formGroup]="form" class="calculator-form">
+        <!-- Search/Selection Section -->
+        <div class="form-section">
+            <h3 class="section-title">Nueva Simulación</h3>
+
+            <div class="form-grid">
+                <!-- Client Autocomplete -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Cliente *</mat-label>
+                    <input matInput placeholder="Buscar cliente por nombre o DNI..." formControlName="clientSearch"
+                        [matAutocomplete]="clientAuto">
+                    <mat-icon matPrefix>person</mat-icon>
+                    <mat-error *ngIf="form.get('clientId')?.hasError('required')">
+                        Cliente es requerido
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-autocomplete #clientAuto="matAutocomplete" [displayWith]="displayClient.bind(this)"
+                    (optionSelected)="onClientSelected($event.option.value)">
+                    <mat-option *ngFor="let client of filteredClients$ | async" [value]="client">
+                        <div class="autocomplete-option">
+                            <strong>{{ client.firstName }} {{ client.lastName || '' }}</strong>
+                            <span *ngIf="client.dni" class="dni-text">DNI: {{ client.dni }}</span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+
+                <!-- Selected Client Indicator -->
+                <div *ngIf="selectedClient" class="selected-indicator full-width">
+                    ✓ Cliente: <strong>{{ selectedClient.firstName }} {{ selectedClient.lastName || '' }}</strong>
+                    <span *ngIf="selectedClient.dni">(DNI: {{ selectedClient.dni }})</span>
+                </div>
+
+                <!-- Property Autocomplete -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Vivienda *</mat-label>
+                    <input matInput placeholder="Buscar vivienda por proyecto o código..."
+                        formControlName="propertySearch" [matAutocomplete]="propertyAuto">
+                    <mat-icon matPrefix>home</mat-icon>
+                    <mat-error *ngIf="form.get('propertyId')?.hasError('required')">
+                        Vivienda es requerida
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-autocomplete #propertyAuto="matAutocomplete" [displayWith]="displayProperty.bind(this)"
+                    (optionSelected)="onPropertySelected($event.option.value)">
+                    <mat-option *ngFor="let property of filteredProperties$ | async" [value]="property">
+                        <div class="autocomplete-option">
+                            <strong>{{ property.propertyName || property.projectName || 'Sin nombre' }}</strong>
+                            <span *ngIf="property.propertyCode" class="code-text">{{ property.propertyCode }}</span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+
+                <!-- Selected Property Indicator -->
+                <div *ngIf="selectedProperty" class="selected-indicator full-width">
+                    ✓ Vivienda: <strong>{{ selectedProperty.propertyName || selectedProperty.projectName || 'Sin nombre'
+                        }}</strong>
+                    <span *ngIf="selectedProperty.propertyCode">({{ selectedProperty.propertyCode }})</span>
+                </div>
+
+                <!-- Bank Entity Autocomplete -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Entidad Bancaria *</mat-label>
+                    <input matInput placeholder="Buscar entidad bancaria..." formControlName="bankEntitySearch"
+                        [matAutocomplete]="bankAuto">
+                    <mat-icon matPrefix>account_balance</mat-icon>
+                    <mat-error *ngIf="form.get('bankEntityId')?.hasError('required')">
+                        Entidad bancaria es requerida
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-autocomplete #bankAuto="matAutocomplete" [displayWith]="displayBankEntity.bind(this)"
+                    (optionSelected)="onBankEntitySelected($event.option.value)">
+                    <mat-option *ngFor="let entity of filteredBankEntities$ | async" [value]="entity">
+                        <div class="autocomplete-option">
+                            <strong>{{ entity.name }}</strong>
+                            <span class="rate-text">{{ entity.currentRate }}%</span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+
+                <!-- Selected Bank Entity Indicator -->
+                <div *ngIf="selectedBankEntity" class="selected-indicator full-width">
+                    ✓ Entidad: <strong>{{ selectedBankEntity.name }}</strong>
+                    <span>(Tasa: {{ selectedBankEntity.currentRate }}%)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Parameters Section -->
+        <div class="form-section">
+            <div class="form-grid">
+                <!-- Property Price -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Precio de Vivienda</mat-label>
+                    <input matInput type="number" formControlName="propertyPrice" placeholder="0.00">
+                    <span matPrefix>S/ &nbsp;</span>
+                </mat-form-field>
+
+                <!-- Down Payment -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Cuota Inicial</mat-label>
+                    <input matInput type="number" formControlName="downPayment" placeholder="0.00">
+                    <span matPrefix>S/ &nbsp;</span>
+                </mat-form-field>
+
+                <!-- Government Bonus -->
+                <div class="full-width bonus-section">
+                    <mat-checkbox formControlName="applyGovernmentBonus">
+                        Aplicar Bono Techo Propio
+                    </mat-checkbox>
+
+                    @if (form.get('applyGovernmentBonus')?.value) {
+                    <div class="bonus-inputs">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Tipo de Bono</mat-label>
+                            <mat-select formControlName="bonusType">
+                                @for (bonus of bonusTypes; track bonus.value) {
+                                <mat-option [value]="bonus.value">
+                                    {{ bonus.label }} (Max S/ {{ bonus.maxAmount.toLocaleString() }})
+                                </mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Monto del Bono</mat-label>
+                            <input matInput type="number" formControlName="governmentBonusAmount">
+                            <span matPrefix>S/ &nbsp;</span>
+                        </mat-form-field>
+                    </div>
+                    }
+                </div>
+
+                <!-- Premio al Buen Pagador (PBP) -->
+                <div class="full-width bonus-section">
+                    <mat-checkbox formControlName="applyPBP">
+                        Aplicar Premio al Buen Pagador (PBP)
+                    </mat-checkbox>
+                    @if (form.get('applyPBP')?.value) {
+                    <p class="help-text">
+                        💡 Si la vivienda califica, se aplicará el descuento correspondiente
+                        (S/ 6,400 para viviendas entre S/ 68,800-S/ 102,899 o S/ 17,700 para viviendas entre S/
+                        102,900-S/ 362,100)
+                    </p>
+                    }
+                </div>
+
+                <!-- Amount to Finance (calculated) -->
+                <mat-form-field appearance="outline" class="full-width calculated-field">
+                    <mat-label>Monto a Financiar</mat-label>
+                    <input matInput [value]="formatCurrency(amountToFinance)" readonly>
+                </mat-form-field>
+
+                <!-- Term Years (slider) -->
+                <div class="full-width slider-field">
+                    <label class="slider-label">Plazo en Años: {{ form.get('termYears')?.value }} años</label>
+                    <mat-slider min="1" max="30" step="1" showTickMarks discrete>
+                        <input matSliderThumb formControlName="termYears">
+                    </mat-slider>
+                </div>
+
+                <!-- Annual Rate -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Tasa Anual (%)</mat-label>
+                    <input matInput type="number" formControlName="annualRate" step="0.01">
+                    <span matSuffix>&nbsp; %</span>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Calculate Button -->
+        <div class="form-actions">
+            <button type="button" mat-raised-button color="primary" (click)="onCalculate()"
+                [disabled]="facade.calculating() || !form.valid" class="calculate-button">
+                <mat-icon>calculate</mat-icon>
+                {{ facade.calculating() ? 'CALCULANDO...' : 'CALCULAR' }}
+            </button>
+        </div>
+    </form>
+
+    <!-- Results Section -->
+    @if (facade.showResults() && facade.currentSimulation()) {
+    <div class="results-section">
+        <!-- Monthly Payment -->
+        <div class="main-result">
+            <h3>Resultado de la Simulación</h3>
+            <div class="monthly-payment">
+                {{ formatCurrency(facade.currentSimulation()!.monthlyPayment) }}
+            </div>
+            <p class="result-label">Cuota Mensual</p>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="card-value">{{ formatCurrency(facade.currentSimulation()!.totalAmountToPay) }}</div>
+                <div class="card-label">Total a Pagar</div>
+            </div>
+            <button mat-raised-button color="accent" (click)="onSubmit()" [disabled]="facade.saving()">
+                <mat-icon>save</mat-icon>
+                {{ facade.saving() ? 'Guardando...' : 'Guardar' }}
+            </button>
+        </div>
+
+        @if (!facade.currentSimulation()?.id) {
+        <p class="info-text">💡 <em>Guarda la simulación para ver el cronograma de pagos completo</em></p>
+        }
+
+        <!-- Payment Schedule using shared data-table -->
+        @if (facade.showSchedule() && facade.paymentSchedule()) {
+        <div class="schedule-section">
+            <h4>Cronograma de Pagos</h4>
+            <app-data-table [data]="facade.paymentSchedule() || []" [columns]="scheduleColumns"
+                [config]="{ pagination: { enabled: true, pageSize: 12 } }">
+            </app-data-table>
+        </div>
+        }
+    </div>
+    }
+
+    <!-- Error Display -->
+    @if (facade.error()) {
+    <div class="error-banner">
+        {{ facade.error() }}
+        <button mat-icon-button (click)="facade.clearError()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    }
+</div>

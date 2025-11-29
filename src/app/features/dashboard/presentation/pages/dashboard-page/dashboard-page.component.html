@@ -1,0 +1,28 @@
+<div class="dashboard-container">
+
+  <div class="dashboard-content">
+
+    <!-- Pass facade statCards signal to stats-cards component -->
+    <app-stats-cards [stats]="facade.statCards()" />
+
+    <section class="middle-row">
+      <div class="quick-actions">
+        <!-- Bind action clicked event -->
+        <app-quick-actions (actionClicked)="onActionClick($event)" />
+      </div>
+      <div class="config-panel">
+        <app-current-settings />
+      </div>
+    </section>
+
+    <section class="bottom-row">
+      <div class="recent-simulations">
+        <app-latest-simulations-list />
+      </div>
+      <div class="bank-entities">
+        <app-bank-entities-list />
+      </div>
+    </section>
+
+  </div>
+</div>

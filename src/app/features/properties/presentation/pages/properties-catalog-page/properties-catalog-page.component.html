@@ -1,0 +1,124 @@
+<div class="catalog-container">
+    <!-- Filters Section -->
+    <app-filter-bar [config]="filterConfig" (filterChange)="onFilterChange($event)">
+    </app-filter-bar>
+
+    <!-- Loading State -->
+    @if (facade.loading()) {
+    <div class="loading-container">
+        <p>Cargando propiedades...</p>
+    </div>
+    }
+
+    <!-- Error State -->
+    @if (facade.error()) {
+    <div class="error-banner">
+        {{ facade.error() }}
+    </div>
+    }
+
+    <!-- Properties Grid -->
+    @if (!facade.loading() && facade.properties()) {
+    <div class="properties-grid">
+        @for (property of facade.properties()!.content; track property.id) {
+        <div class="property-card">
+            <!-- Property Image -->
+            <div class="property-image">
+                @if (property.imageUrl) {
+                <img [src]="property.imageUrl" [alt]="property.propertyName || 'Propiedad'">
+                } @else {
+                <div class="placeholder-image">
+                    <mat-icon>home</mat-icon>
+                </div>
+                }
+
+                <!-- Property Code Badge -->
+                <div class="property-code">VIV-{{ property.id.toString().padStart(3, '0') }}</div>
+
+                <!-- Status Badge -->
+                <div class="status-badge" [ngClass]="'status-' + property.status.toLowerCase()">
+                    {{ property.status === 'AVAILABLE' ? 'Disponible' : property.status === 'SOLD' ? 'Vendida' :
+                    property.status === 'RESERVED' ? 'Reservada' : property.status }}
+                </div>
+            </div>
+
+            <!-- Property Info -->
+            <div class="property-info">
+                <h3 class="property-name">{{ property.propertyName || 'Sin nombre' }}</h3>
+
+                <div class="property-details">
+                    {{ getPropertyTypeLabel(property.propertyType) }}
+                    @if (property.bedrooms) {
+                    • {{ property.bedrooms }} dormitorios
+                    }
+                    @if (property.area) {
+                    • {{ property.area }} m²
+                    }
+                </div>
+
+                <div class="property-location">
+                    {{ property.district }}{{ property.city ? ', ' + property.city : '' }}
+                </div>
+
+                <div class="property-price">
+                    {{ formatPrice(property.price) }}
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="property-actions">
+                    <button mat-raised-button color="primary" class="details-button"
+                        [routerLink]="['/properties', property.id]">
+                        Ver Detalle
+                    </button>
+                    <button mat-icon-button [routerLink]="['/properties/edit', property.id]">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="onDelete(property.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <!-- Results Count -->
+    <div class="results-info">
+        Mostrando {{ facade.properties()!.number + 1 }}-{{ facade.properties()!.number +
+        facade.properties()!.content.length }} de {{ facade.properties()!.totalElements }} viviendas
+    </div>
+
+    <!-- Pagination -->
+    @if (facade.properties()!.totalPages > 1) {
+    <div class="pagination">
+        <button mat-icon-button [disabled]="facade.properties()!.number === 0"
+            (click)="onPageChange(facade.properties()!.number - 1)">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        @for (page of [].constructor(Math.min(5, facade.properties()!.totalPages)); track $index) {
+        <button mat-stroked-button [class.active]="$index === facade.properties()!.number"
+            (click)="onPageChange($index)">
+            {{ $index + 1 }}
+        </button>
+        }
+
+        <button mat-icon-button [disabled]="facade.properties()!.number >= facade.properties()!.totalPages - 1"
+            (click)="onPageChange(facade.properties()!.number + 1)">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+    </div>
+    }
+    }
+
+    <!-- Empty State -->
+    @if (!facade.loading() && facade.properties() && facade.properties()!.content.length === 0) {
+    <div class="empty-state">
+        <mat-icon>home_work</mat-icon>
+        <p>No se encontraron propiedades</p>
+        <button mat-raised-button color="primary" routerLink="/properties/new">
+            Agregar Nueva Vivienda
+        </button>
+    </div>
+    }
+</div>

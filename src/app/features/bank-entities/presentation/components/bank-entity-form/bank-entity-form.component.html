@@ -1,0 +1,77 @@
+<!-- Modal overlay and container from BaseModalFormComponent -->
+<div class="modal-overlay" (click)="onCancel()" *ngIf="isOpen">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h2 class="modal-title">{{ title }}</h2>
+            <button type="button" class="modal-close" (click)="onCancel()" [disabled]="isSubmitting">
+                ×
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <!-- Bank Entity Form Content -->
+            <form [formGroup]="form" class="bank-entity-form">
+                <!-- Name Field (Read-only) -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Nombre de la Entidad</mat-label>
+                    <input matInput formControlName="name" readonly />
+                    <mat-hint>El nombre no puede ser modificado</mat-hint>
+                </mat-form-field>
+
+                <!-- Current Rate Field -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Tasa Actual (%)</mat-label>
+                    <input matInput type="number" formControlName="currentRate" step="0.01" min="7.5" max="9.6" />
+                    @if (form.get('currentRate')?.hasError('required') && form.get('currentRate')?.touched) {
+                    <mat-error>La tasa actual es requerida</mat-error>
+                    }
+                    @if (form.get('currentRate')?.hasError('min')) {
+                    <mat-error>La tasa debe ser al menos 7.5%</mat-error>
+                    }
+                    @if (form.get('currentRate')?.hasError('max')) {
+                    <mat-error>La tasa no puede exceder 9.6%</mat-error>
+                    }
+                    <mat-hint>Rango permitido: 7.5% - 9.6%</mat-hint>
+                </mat-form-field>
+
+                <!-- Minimum Income Field -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Ingreso Mínimo (S/)</mat-label>
+                    <input matInput type="number" formControlName="minimunIncome" step="100" min="2000" />
+                    @if (form.get('minimunIncome')?.hasError('required') && form.get('minimunIncome')?.touched) {
+                    <mat-error>El ingreso mínimo es requerido</mat-error>
+                    }
+                    @if (form.get('minimunIncome')?.hasError('min')) {
+                    <mat-error>El ingreso mínimo debe ser al menos S/ 2,000</mat-error>
+                    }
+                    <mat-hint>Mínimo: S/ 2,000</mat-hint>
+                </mat-form-field>
+
+                <!-- Max Coverage Field -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Cobertura Máxima (%)</mat-label>
+                    <input matInput type="number" formControlName="maxCoveragePct" step="1" min="0" max="100" />
+                    @if (form.get('maxCoveragePct')?.hasError('required') && form.get('maxCoveragePct')?.touched) {
+                    <mat-error>La cobertura máxima es requerida</mat-error>
+                    }
+                    @if (form.get('maxCoveragePct')?.hasError('min')) {
+                    <mat-error>La cobertura debe ser al menos 0%</mat-error>
+                    }
+                    @if (form.get('maxCoveragePct')?.hasError('max')) {
+                    <mat-error>La cobertura no puede exceder 100%</mat-error>
+                    }
+                    <mat-hint>Rango: 0% - 100%</mat-hint>
+                </mat-form-field>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="isSubmitting">
+                Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="isSubmitting">
+                {{ isSubmitting ? 'Guardando...' : saveButtonText }}
+            </button>
+        </div>
+    </div>
+</div>

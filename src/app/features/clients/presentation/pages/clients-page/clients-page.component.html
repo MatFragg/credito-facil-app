@@ -1,0 +1,25 @@
+<div class="clients-page">
+    <!-- Statistics Cards -->
+    <div class="stats-grid">
+        @for (card of statCards(); track card.label) {
+        <app-stat-card [data]="card" />
+        }
+    </div>
+
+    <!-- Clients Table -->
+    <div class="clients-table-section">
+        <h2 class="section-title">Lista de Clientes</h2>
+
+        <app-data-table [columns]="tableColumns" [data]="facade.clients()" [config]="tableConfig"
+            [isLoading]="facade.loading()" [actions]="tableActions" />
+    </div>
+
+    <!-- Error State -->
+    @if (facade.error()) {
+    <div class="error-banner">
+        <mat-icon>warning</mat-icon>
+        <span>{{ facade.error() }}</span>
+        <button mat-button (click)="facade.clearError()">Cerrar</button>
+    </div>
+    }
+</div>

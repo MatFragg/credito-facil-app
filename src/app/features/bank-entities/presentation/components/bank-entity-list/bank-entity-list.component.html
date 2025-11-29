@@ -1,0 +1,122 @@
+<mat-card class="bank-entity-list">
+    <div class="table-header">
+        <h3>Lista de Entidades Bancarias</h3>
+        <div class="table-actions">
+            <button mat-icon-button matTooltip="Descargar">
+                <mat-icon>file_download</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Imprimir">
+                <mat-icon>print</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Cargando entidades bancarias...</p>
+    </div>
+
+    <!-- Table Content - Only show when not loading -->
+    <div *ngIf="!isLoading" class="table-container">
+        <table mat-table [dataSource]="pageEntities()" class="entities-table">
+            <!-- Entity Column -->
+            <ng-container matColumnDef="entity">
+                <th mat-header-cell *matHeaderCellDef>Entidad</th>
+                <td mat-cell *matCellDef="let entity">
+                    <div class="entity-info">
+                        <div class="entity-badge" [ngClass]="getBankBadgeClass(entity.name)">
+                            {{ getBankInitials(entity.name) }}
+                        </div>
+                        <div class="entity-details">
+                            <div class="entity-name">{{ entity.name }}</div>
+                            <div class="entity-subtitle">{{ getBankSubtitle(entity.name) }}</div>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Current Rate Column -->
+            <ng-container matColumnDef="currentRate">
+                <th mat-header-cell *matHeaderCellDef>Tasa Actual</th>
+                <td mat-cell *matCellDef="let entity">
+                    <span class="rate-badge" [ngClass]="{
+            'rate-low': entity.currentRate < 8,
+            'rate-medium': entity.currentRate >= 8 && entity.currentRate < 9,
+            'rate-high': entity.currentRate >= 9
+          }">
+                        {{ entity.currentRate.toFixed(2) }}%
+                    </span>
+                </td>
+            </ng-container>
+
+            <!-- Minimum Income Column -->
+            <ng-container matColumnDef="minimumIncome">
+                <th mat-header-cell *matHeaderCellDef>Ingreso Mínimo</th>
+                <td mat-cell *matCellDef="let entity">
+                    S/ {{ (entity.minimunIncome || 0).toLocaleString() }}
+                </td>
+            </ng-container>
+
+            <!-- Initial Fee Column (Max Coverage) -->
+            <ng-container matColumnDef="initialFee">
+                <th mat-header-cell *matHeaderCellDef>Cuota Inicial</th>
+                <td mat-cell *matCellDef="let entity">
+                    {{ entity.maxCoveragePct || 0 }}%
+                </td>
+            </ng-container>
+
+            <!-- Last Update Column -->
+            <ng-container matColumnDef="lastUpdate">
+                <th mat-header-cell *matHeaderCellDef>Última Actualización</th>
+                <td mat-cell *matCellDef="let entity">
+                    15/10/2024
+                </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let entity">
+                    <div class="action-buttons">
+                        <!-- Edit button - admin only -->
+                        <button mat-icon-button *ngIf="isAdmin()" (click)="onEdit(entity)" matTooltip="Editar"
+                            class="action-icon edit-icon">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+
+                        <!-- View button -->
+                        <button mat-icon-button (click)="onView(entity)" matTooltip="Ver detalles"
+                            class="action-icon view-icon">
+                            <mat-icon>visibility</mat-icon>
+                        </button>
+
+                        <!-- Compare button -->
+                        <button mat-icon-button matTooltip="Comparar" class="action-icon compare-icon">
+                            <mat-icon>compare_arrows</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="entity-row"></tr>
+        </table>
+
+        <!-- Empty State -->
+        <div *ngIf="!entities || entities.length === 0" class="empty-state">
+            <mat-icon class="empty-icon">inbox</mat-icon>
+            <p>No se encontraron entidades bancarias</p>
+        </div>
+    </div>
+
+    <!-- Paginator - Only show when not loading and has data -->
+    <div *ngIf="!isLoading && entities && entities.length > 0" class="paginator-container">
+        <div class="paginator-info">
+            Mostrando {{ getStartIndex() + 1 }} - {{ getEndIndex() }} de {{ getTotalEntities() }} entidades
+        </div>
+        <mat-paginator [length]="getTotalEntities()" [pageSize]="pageSize()" [pageSizeOptions]="[5, 10, 25]"
+            (page)="onPageChange($event)" showFirstLastButtons>
+        </mat-paginator>
+    </div>
+</mat-card>

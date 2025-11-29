@@ -1,0 +1,346 @@
+<div class="details-container">
+    <!-- Loading State -->
+    @if (loading()) {
+    <div class="loading-state">
+        <p>Cargando simulación...</p>
+    </div>
+    }
+
+    <!-- Error State -->
+    @if (error() && !loading()) {
+    <div class="error-state">
+        <mat-icon>error_outline</mat-icon>
+        <p>{{ error() }}</p>
+        <button mat-raised-button color="primary" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Volver al Historial
+        </button>
+    </div>
+    }
+
+    <!-- Simulation Details -->
+    @if (simulation() && !loading()) {
+    <div class="details-content">
+        <!-- Header -->
+        <div class="details-header">
+            <button mat-icon-button (click)="goBack()" class="back-button">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="header-info">
+                <div class="title-section">
+                    <h1 class="simulation-code">{{ simulation()!.simulationCode }}</h1>
+                    @if (simulation()!.simulationName) {
+                    <p class="simulation-name">{{ simulation()!.simulationName }}</p>
+                    }
+                </div>
+                <mat-chip [color]="getStatusColor()" highlighted>
+                    {{ getStatusLabel() }}
+                </mat-chip>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <mat-card class="summary-card primary-card">
+                <mat-card-content>
+                    <div class="card-icon">
+                        <mat-icon>payments</mat-icon>
+                    </div>
+                    <div class="card-value">{{ formatCurrency(simulation()!.monthlyPayment) }}</div>
+                    <div class="card-label">Cuota Mensual</div>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="summary-card">
+                <mat-card-content>
+                    <div class="card-icon">
+                        <mat-icon>account_balance_wallet</mat-icon>
+                    </div>
+                    <div class="card-value">{{ formatCurrency(simulation()!.totalAmountToPay) }}</div>
+                    <div class="card-label">Total a Pagar</div>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="summary-card">
+                <mat-card-content>
+                    <div class="card-icon">
+                        <mat-icon>trending_up</mat-icon>
+                    </div>
+                    <div class="card-value">{{ formatCurrency(simulation()!.totalInterest) }}</div>
+                    <div class="card-label">Total Intereses</div>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="summary-card">
+                <mat-card-content>
+                    <div class="card-icon">
+                        <mat-icon>percent</mat-icon>
+                    </div>
+                    <div class="card-value">{{ formatPercentage(simulation()!.tcea) }}</div>
+                    <div class="card-label">TCEA</div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Related Entities Section -->
+        <div class="entities-section">
+            <h2>Información Relacionada</h2>
+            <div class="entities-grid">
+                <!-- Client Card -->
+                <mat-card class="entity-card">
+                    <mat-card-header>
+                        <mat-icon mat-card-avatar>person</mat-icon>
+                        <mat-card-title>Cliente</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        @if (client()) {
+                        <p class="entity-name">{{ client()!.firstName }} {{ client()!.lastName }}</p>
+                        @if (client()!.dni) {
+                        <p class="entity-detail">DNI: {{ client()!.dni }}</p>
+                        }
+                        @if (client()!.email) {
+                        <p class="entity-detail">{{ client()!.email }}</p>
+                        }
+                        } @else {
+                        <p class="entity-loading">Cliente no disponible</p>
+                        }
+                    </mat-card-content>
+                    @if (client()) {
+                    <mat-card-actions>
+                        <button mat-button color="primary" [routerLink]="['/clients', client()!.id]">
+                            Ver Perfil
+                        </button>
+                    </mat-card-actions>
+                    }
+                </mat-card>
+
+                <!-- Property Card -->
+                <mat-card class="entity-card">
+                    <mat-card-header>
+                        <mat-icon mat-card-avatar>home</mat-icon>
+                        <mat-card-title>Vivienda</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        @if (property()) {
+                        <p class="entity-name">{{ property()!.propertyName || property()!.projectName }}</p>
+                        <p class="entity-detail">Código: {{ property()!.propertyCode }}</p>
+                        <p class="entity-detail">{{ formatCurrency(property()!.price) }}</p>
+                        } @else {
+                        <p class="entity-loading">Vivienda no disponible</p>
+                        }
+                    </mat-card-content>
+                    @if (property()) {
+                    <mat-card-actions>
+                        <button mat-button color="primary" [routerLink]="['/properties', property()!.id]">
+                            Ver Detalles
+                        </button>
+                    </mat-card-actions>
+                    }
+                </mat-card>
+
+                <!-- Bank Entity Card -->
+                <mat-card class="entity-card">
+                    <mat-card-header>
+                        <mat-icon mat-card-avatar>account_balance</mat-icon>
+                        <mat-card-title>Entidad Bancaria</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        @if (bankEntity()) {
+                        <p class="entity-name">{{ bankEntity()!.name }}</p>
+                        <p class="entity-detail">Tasa: {{ formatPercentage(bankEntity()!.currentRate) }}</p>
+                        <p class="entity-detail">Cobertura: {{ bankEntity()!.maxCoveragePct }}%</p>
+                        } @else {
+                        <p class="entity-loading">Banco no disponible</p>
+                        }
+                    </mat-card-content>
+                    @if (bankEntity()) {
+                    <mat-card-actions>
+                        <button mat-button color="primary" [routerLink]="['/bank-entities']">
+                            Ver Entidades
+                        </button>
+                    </mat-card-actions>
+                    }
+                </mat-card>
+            </div>
+        </div>
+
+        <!-- Input Parameters Section -->
+        <div class="section">
+            <h2>Parámetros de Entrada</h2>
+            <mat-card>
+                <mat-card-content>
+                    <div class="params-grid">
+                        <div class="param-item">
+                            <span class="param-label">Precio de Vivienda</span>
+                            <span class="param-value">{{ formatCurrency(simulation()!.propertyPrice) }}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Cuota Inicial</span>
+                            <span class="param-value">{{ formatCurrency(simulation()!.downPayment) }}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Bono Gubernamental</span>
+                            <span class="param-value">
+                                @if (simulation()!.applyGovernmentBonus) {
+                                {{ formatCurrency(simulation()!.governmentBonusAmount) }}
+                                <span class="param-note">({{ getBonusTypeLabel() }})</span>
+                                } @else {
+                                No aplica
+                                }
+                            </span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Premio al Buen Pagador (PBP)</span>
+                            <span class="param-value">
+                                @if (simulation()!.applyPBP) {
+                                {{ formatCurrency(simulation()!.pbpAmount) }}
+                                } @else {
+                                No aplica
+                                }
+                            </span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Tasa Anual</span>
+                            <span class="param-value">{{ formatPercentage(simulation()!.annualRate) }}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Plazo</span>
+                            <span class="param-value">{{ simulation()!.termYears }} años</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Tasa Seguro de Vida</span>
+                            <span class="param-value">{{ formatPercentage(simulation()!.lifeInsuranceRate) }}</span>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label">Seguro Inmueble</span>
+                            <span class="param-value">{{ formatCurrency(simulation()!.propertyInsurance) }}</span>
+                        </div>
+                        @if (simulation()!.desgravamenRate) {
+                        <div class="param-item">
+                            <span class="param-label">Tasa Desgravamen</span>
+                            <span class="param-value">{{ formatPercentage(simulation()!.desgravamenRate) }}</span>
+                        </div>
+                        }
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Calculated Results Section -->
+        <div class="section">
+            <h2>Resultados Calculados</h2>
+            <mat-card>
+                <mat-card-content>
+                    <div class="results-grid">
+                        <div class="result-item highlighted">
+                            <span class="result-label">Monto a Financiar</span>
+                            <span class="result-value">{{ formatCurrency(simulation()!.amountToFinance) }}</span>
+                        </div>
+                        <div class="result-item highlighted">
+                            <span class="result-label">Cuota Mensual</span>
+                            <span class="result-value">{{ formatCurrency(simulation()!.monthlyPayment) }}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Seguro de Vida</span>
+                            <span class="result-value">{{ formatCurrency(simulation()!.totalLifeInsurance) }}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Seguro Inmueble</span>
+                            <span class="result-value">{{ formatCurrency(simulation()!.totalPropertyInsurance) }}</span>
+                        </div>
+                        @if (simulation()!.totalDesgravamenInsurance) {
+                        <div class="result-item">
+                            <span class="result-label">Total Desgravamen</span>
+                            <span class="result-value">{{ formatCurrency(simulation()!.totalDesgravamenInsurance)
+                                }}</span>
+                        </div>
+                        }
+                        <div class="result-item">
+                            <span class="result-label">Comisión de Apertura</span>
+                            <span class="result-value">{{ formatCurrency(simulation()!.openingCommission) }}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Gastos Notariales</span>
+                            <span class="result-value">{{ formatCurrency(simulation()!.notaryFees) }}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Gastos Registrales</span>
+                            <span class="result-value">{{ formatCurrency(simulation()!.registrationFees) }}</span>
+                        </div>
+                        <div class="result-item total">
+                            <span class="result-label">Total Costos Adicionales</span>
+                            <span class="result-value">{{ formatCurrency(simulation()!.totalAdditionalCosts) }}</span>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Financial Indicators Section -->
+        <div class="section">
+            <h2>Indicadores Financieros</h2>
+            <div class="indicators-grid">
+                <mat-card class="indicator-card">
+                    <mat-card-content>
+                        <div class="indicator-icon">
+                            <mat-icon>analytics</mat-icon>
+                        </div>
+                        <div class="indicator-value">{{ formatCurrency(simulation()!.npv) }}</div>
+                        <div class="indicator-label">VAN (Valor Actual Neto)</div>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="indicator-card">
+                    <mat-card-content>
+                        <div class="indicator-icon">
+                            <mat-icon>show_chart</mat-icon>
+                        </div>
+                        <div class="indicator-value">{{ formatPercentage(simulation()!.irr) }}</div>
+                        <div class="indicator-label">TIR (Tasa Interna de Retorno)</div>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="indicator-card">
+                    <mat-card-content>
+                        <div class="indicator-icon">
+                            <mat-icon>trending_up</mat-icon>
+                        </div>
+                        <div class="indicator-value">{{ formatPercentage(simulation()!.tcea) }}</div>
+                        <div class="indicator-label">TCEA (Tasa de Costo Efectivo Anual)</div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+        <!-- Payment Schedule Section -->
+        @if (simulationFacade.paymentSchedule() && simulationFacade.paymentSchedule()!.length > 0) {
+        <div class="section">
+            <h2>Cronograma de Pagos</h2>
+            <app-data-table [data]="simulationFacade.paymentSchedule() || []" [columns]="scheduleColumns"
+                [config]="{ pagination: { enabled: true, pageSize: 12 } }">
+            </app-data-table>
+        </div>
+        }
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button mat-stroked-button (click)="goBack()">
+                <mat-icon>arrow_back</mat-icon>
+                Volver
+            </button>
+            <button mat-raised-button color="primary" (click)="cloneSimulation()">
+                <mat-icon>content_copy</mat-icon>
+                Clonar Simulación
+            </button>
+            <button mat-raised-button color="accent" (click)="exportToPDF()">
+                <mat-icon>picture_as_pdf</mat-icon>
+                Exportar PDF
+            </button>
+            <button mat-raised-button color="warn" (click)="deleteSimulation()">
+                <mat-icon>delete</mat-icon>
+                Eliminar
+            </button>
+        </div>
+    </div>
+    }
+</div>

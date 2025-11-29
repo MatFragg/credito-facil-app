@@ -1,8 +1,8 @@
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { BaseModel } from './models/base.model';
-import { BaseDto } from './models/base.dto';
+import { BaseDto } from './models/base-api-response.dto';
 import { BaseMapper } from './models/base.mapper';
 
 /**
@@ -22,7 +22,7 @@ export abstract class BaseApiEndpoint<
     protected http: HttpClient,
     protected endpointUrl: string,
     protected mapper: TMapper
-  ) {}
+  ) { }
 
   /**
    * Retrieves all entities from the API, handling both response objects and arrays.

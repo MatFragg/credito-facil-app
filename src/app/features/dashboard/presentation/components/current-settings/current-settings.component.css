@@ -1,0 +1,100 @@
+.dashboard-card {
+    padding: 20px;
+    border-radius: 12px !important;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+    background-color: #feffff;
+}
+
+.card-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    color: #222;
+}
+
+.card-body {
+    flex: 1;
+}
+
+.config-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.config-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    /* Reduced from 12px */
+    background-color: transparent;
+    /* No background */
+    border-radius: 0;
+    border-bottom: 1px solid #F3F4F6;
+    /* Subtle separator */
+}
+
+.config-item:last-child {
+    border-bottom: none;
+}
+
+.config-label {
+    color: #444;
+    font-weight: 500;
+}
+
+/* Pills (Etiquetas de colores) */
+.config-pill {
+    padding: 6px 16px;
+    border-radius: 20px;
+    /* Bordes muy redondos */
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.view-all-btn {
+    width: 100% !important;
+    height: 44px !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    font-size: 0.9rem !important;
+    color: #2563EB !important;
+    /* Add this */
+    border-color: #2563EB !important;
+    /* Add this */
+}
+
+.blue-pill {
+    background-color: #2962ff;
+}
+
+.green-pill {
+    background-color: #00c853;
+}
+
+.gray-pill {
+    background-color: #607d8b;
+}
+
+/* Botón Gris inferior */
+.config-action {
+    margin-top: 16px;
+    /* Tighter margin */
+    padding-top: 16px;
+    border-top: 1px solid #F3F4F6;
+}
+
+.gray-button {
+    width: 100% !important;
+    height: 44px !important;
+    background-color: #F9FAFB !important;
+    color: #374151 !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+}

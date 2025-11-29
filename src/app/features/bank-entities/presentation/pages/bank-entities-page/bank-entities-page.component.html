@@ -1,0 +1,72 @@
+<div class="bank-entities-page">
+    <!-- Statistics Cards -->
+    <div class="stats-grid">
+        <mat-card class="stat-card">
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">Total Entidades</span>
+                    <mat-icon class="stat-icon blue">account_balance</mat-icon>
+                </div>
+                <div class="stat-value">{{ facade.stats().total }}</div>
+            </div>
+        </mat-card>
+
+        <mat-card class="stat-card">
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">Tasa Promedio</span>
+                    <mat-icon class="stat-icon green">percent</mat-icon>
+                </div>
+                <div class="stat-value">{{ facade.stats().averageRate.toFixed(2) }}%</div>
+            </div>
+        </mat-card>
+
+        <mat-card class="stat-card">
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">Tasa Mínima</span>
+                    <mat-icon class="stat-icon green-light">arrow_downward</mat-icon>
+                </div>
+                <div class="stat-value green-text">
+                    {{ getLowestRate() }}%
+                </div>
+            </div>
+        </mat-card>
+
+        <mat-card class="stat-card">
+            <div class="stat-content">
+                <div class="stat-header">
+                    <span class="stat-label">Última Actualización</span>
+                    <mat-icon class="stat-icon yellow">schedule</mat-icon>
+                </div>
+                <div class="stat-value">Hoy</div>
+            </div>
+        </mat-card>
+    </div>
+
+    <!-- Filters and Search Section -->
+    <app-filter-bar [config]="filterConfig" (filterChange)="onFilterChange($event)" (clearFilters)="onClearFilters()">
+    </app-filter-bar>
+
+    <!-- Bank Entities List -->
+    <app-bank-entity-list [entities]="facade.entities()" [isLoading]="facade.loading()" (edit)="onEditEntity($event)"
+        (view)="onViewEntity($event)">
+    </app-bank-entity-list>
+
+    <!-- Comparison Section -->
+    <div class="comparison-wrapper">
+        <app-bank-entity-comparison [availableEntities]="facade.entities()">
+        </app-bank-entity-comparison>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="facade.error()" class="error-banner">
+        <mat-icon>warning</mat-icon>
+        <span>{{ facade.error() }}</span>
+        <button mat-button (click)="facade.loadAll()">Reintentar</button>
+    </div>
+
+    <!-- Bank Entity Modal Form -->
+    <app-bank-entity-form [isOpen]="isModalOpen()" [entity]="selectedEntity()" (saved)="onModalSaved($event)"
+        (cancelled)="onModalCancelled()" />
+</div>

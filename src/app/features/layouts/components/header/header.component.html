@@ -1,0 +1,64 @@
+<header class="page-header">
+  <div class="header-left">
+    <!-- Back Button (Type 4: Property Form) -->
+    <button *ngIf="config.backButton" mat-button class="back-button" (click)="onBackClick()">
+      <mat-icon>arrow_back</mat-icon>
+      {{ config.backButton.label }}
+    </button>
+
+    <!-- Title Section -->
+    <div class="title-group" [class.with-back-button]="config.backButton">
+      <h1 class="page-title">{{ config.title }}</h1>
+      <p *ngIf="config.subtitle" class="page-subtitle">{{ config.subtitle }}</p>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <!-- Search Input (Type 3: Simulations) -->
+    <mat-form-field *ngIf="config.search" class="search-field" appearance="outline">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [placeholder]="config.search.placeholder" [value]="config.search.value || ''"
+        (input)="onSearchInput($event)">
+    </mat-form-field>
+
+    <!-- Action Buttons (Type 2, 3: Bank Entities, Simulations) -->
+    <ng-container *ngFor="let action of config.actions">
+      <!-- Raised Button -->
+      <button *ngIf="action.type === 'button' && action.raised" mat-raised-button [color]="action.color"
+        class="action-button" (click)="action.handler()">
+        <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+        {{ action.label }}
+      </button>
+
+      <!-- Flat Button -->
+      <button *ngIf="action.type === 'button' && !action.raised" mat-button [color]="action.color" class="action-button"
+        (click)="action.handler()">
+        <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
+        {{ action.label }}
+      </button>
+
+      <!-- Icon Button -->
+      <button *ngIf="action.type === 'icon'" mat-icon-button class="action-icon-button" (click)="action.handler()">
+        <mat-icon>{{ action.icon }}</mat-icon>
+      </button>
+    </ng-container>
+
+    <!-- Notifications (Type 1: Dashboard) -->
+    <mat-icon *ngIf="config.showNotifications" [matBadge]="config.notificationCount || 0"
+      [matBadgeHidden]="!config.notificationCount" matBadgeColor="warn" matBadgeSize="small" class="notification-icon"
+      (click)="onNotificationClick()">
+      notifications
+    </mat-icon>
+
+    <!-- User Info (All Types) -->
+    <div *ngIf="config.showUserInfo !== false" class="user-info">
+      <img src="assets/juan_perez_avatar.jpg" [alt]="'Avatar de ' + currentUser()?.firstName" class="user-avatar">
+      <div class="user-text">
+        <span class="user-name">
+          {{ currentUser()?.firstName }} {{ currentUser()?.lastName }}
+        </span>
+        <span class="user-role">{{ userRole() }}</span>
+      </div>
+    </div>
+  </div>
+</header>

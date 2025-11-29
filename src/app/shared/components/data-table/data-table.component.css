@@ -1,0 +1,133 @@
+.data-table-container {
+    width: 100%;
+    position: relative;
+}
+
+/* Loading State */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    gap: 1rem;
+}
+
+.loading-state p {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+/* Table Wrapper */
+.table-wrapper {
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+}
+
+.hoverable-rows tr.data-row:hover {
+    background-color: #f9fafb;
+}
+
+.clickable-rows tr.data-row {
+    cursor: pointer;
+}
+
+.clickable-rows tr.data-row:hover {
+    background-color: #f3f4f6;
+}
+
+/* Header Cells */
+th.mat-header-cell {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    padding: 1rem;
+}
+
+/* Data Cells */
+td.mat-cell {
+    padding: 1rem;
+    color: #1f2937;
+    font-size: 0.875rem;
+}
+
+/* Badge Styling */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Boolean Icons */
+.success-icon {
+    color: #10b981;
+}
+
+.error-icon {
+    color: #ef4444;
+}
+
+/* Image Cells */
+.cell-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #9ca3af;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    color: #d1d5db;
+}
+
+.empty-state p {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Pagination */
+mat-paginator {
+    border-top: 1px solid #e5e7eb;
+    background: transparent;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    th.mat-header-cell,
+    td.mat-cell {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8125rem;
+    }
+}
