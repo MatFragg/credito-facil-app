@@ -61,7 +61,8 @@ export class AuthMapper {
       lastName: data.lastName,
       username: data.username,
       email: data.email,
-      password: data.password
+      password: data.password,
+      turnstileToken: data.turnstileToken
     };
   }
 }

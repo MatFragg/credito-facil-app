@@ -59,16 +59,19 @@ export class RegisterFormComponent extends BaseFormComponent implements OnInit, 
     }
 
     ngAfterViewInit(): void {
+
         // Render Turnstile widget after view initialization
         if (this.turnstileContainer) {
             this.turnstileService.render(this.turnstileContainer.nativeElement)
+                .then(() => {
+                })
                 .catch(error => {
-                    console.error('Error rendering Turnstile:', error);
                 });
         }
     }
 
     override submitForm(): Observable<any> {
+
         // Get Turnstile token
         const turnstileToken = this.turnstileService.getToken();
 
@@ -86,13 +89,10 @@ export class RegisterFormComponent extends BaseFormComponent implements OnInit, 
     }
 
     protected override onSubmitSuccess(): void {
-        console.log('Registro exitoso');
         this.router.navigate(['/dashboard']);
     }
 
     protected override onSubmitError(error: any): void {
-        console.error('Error en el registro:', error);
-
         // Reset Turnstile widget on error
         this.turnstileService.reset();
 

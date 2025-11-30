@@ -60,8 +60,9 @@ export class LoginFormComponent extends BaseFormComponent implements OnInit, OnD
     // Render Turnstile widget after view initialization
     if (this.turnstileContainer) {
       this.turnstileService.render(this.turnstileContainer.nativeElement)
+        .then(() => {
+        })
         .catch(error => {
-          console.error('Error rendering Turnstile:', error);
         });
     }
   }
@@ -76,6 +77,7 @@ export class LoginFormComponent extends BaseFormComponent implements OnInit, OnD
       rememberMe: this.form.value.rememberMe,
       turnstileToken: turnstileToken || undefined
     };
+
 
     return this.loginUseCase.execute(credentials);
   }

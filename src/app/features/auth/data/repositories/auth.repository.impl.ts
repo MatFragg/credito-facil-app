@@ -20,7 +20,8 @@ export class AuthRepositoryImpl extends AuthRepository {
   login(credentials: Credentials): Observable<AuthResponse> {
     const loginDto: LoginRequestDto = {
       email: credentials.email,
-      password: credentials.password
+      password: credentials.password,
+      turnstileToken: credentials.turnstileToken
     };
 
     return this.dataSource.login(loginDto).pipe(

@@ -18,6 +18,7 @@ export class TurnstileService {
      * Load Turnstile script if not already loaded
      */
     loadScript(): Promise<void> {
+
         if (this.scriptLoaded) {
             return Promise.resolve();
         }
@@ -55,6 +56,8 @@ export class TurnstileService {
      * @param callback Optional callback when widget is rendered
      */
     async render(container: HTMLElement, callback?: (token: string) => void): Promise<void> {
+        console.log('[Turnstile] Render called, container:', container);
+
         await this.loadScript();
 
         // Wait for turnstile global object to be available
@@ -69,7 +72,15 @@ export class TurnstileService {
         // Render the widget
         this.widgetId = turnstile.render(container, {
             sitekey: environment.turnstile.siteKey,
-            callback: callback,
+            callback: (token: string) => {
+                if (callback) {
+                    callback(token);
+                }
+            },
+            'error-callback': () => {
+            },
+            'expired-callback': () => {
+            },
             theme: 'light',
             size: 'normal'
         });
@@ -85,7 +96,9 @@ export class TurnstileService {
             return null;
         }
 
-        return turnstile.getResponse(this.widgetId);
+        const token = turnstile.getResponse(this.widgetId);
+
+        return token;
     }
 
     /**
@@ -115,6 +128,7 @@ export class TurnstileService {
      * Wait for Turnstile global object to be available
      */
     private waitForTurnstile(): Promise<void> {
+
         return new Promise((resolve) => {
             const checkTurnstile = () => {
                 if ((window as any).turnstile) {
