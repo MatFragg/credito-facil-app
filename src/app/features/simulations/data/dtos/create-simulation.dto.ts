@@ -16,11 +16,14 @@ export interface CreateSimulationDto {
     annualRate: number;
     termYears: number;
     lifeInsuranceRate?: number;
-    propertyInsurance?: number;
+    propertyInsurance?: number | null;
+    propertyInsuranceRate?: number | null;
     openingCommission?: number;
     notaryFees?: number;
     registrationFees?: number;
     status?: string;
     desgravamenRate?: number;
     applyPBP?: boolean;
+    currency?: string;
+    discountRate?: number;
 }

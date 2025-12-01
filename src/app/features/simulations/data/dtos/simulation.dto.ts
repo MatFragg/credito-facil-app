@@ -19,10 +19,12 @@ export interface SimulationDto {
     annualRate: number;
     termYears: number;
     lifeInsuranceRate: number;
-    propertyInsurance: number;
+    propertyInsurance: number | null;
+    propertyInsuranceRate?: number | null;
     openingCommission: number;
     notaryFees: number;
     registrationFees: number;
+    loanAmount?: number;
     monthlyPayment: number;
     totalMonthlyPayment: number;
     totalAmountToPay: number;
@@ -31,6 +33,18 @@ export interface SimulationDto {
     loanTermMonths: number;
     totalLifeInsurance: number;
     totalPropertyInsurance: number;
+
+    // Multi-currency support
+    currency?: string;
+    currencySymbol?: string;
+    exchangeRateUsed?: number;
+    propertyPriceAlternate?: number;
+    monthlyPaymentAlternate?: number;
+    alternateCurrency?: string;
+    alternateCurrencySymbol?: string;
+
+    // Financial indicators
+    discountRate?: number;
     npv: number;
     irr: number;
     tcea: number;

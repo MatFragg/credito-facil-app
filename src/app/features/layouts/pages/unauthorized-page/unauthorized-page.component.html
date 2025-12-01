@@ -1,0 +1,23 @@
+<div class="unauthorized-container">
+    <div class="unauthorized-content">
+        <div class="error-icon">
+            <mat-icon>block</mat-icon>
+        </div>
+
+        <h1 class="error-code">403</h1>
+        <h2 class="error-title">Acceso No Autorizado</h2>
+        <p class="error-message">
+            No tienes permisos para acceder a este recurso. Por favor, inicia sesión con una cuenta autorizada.
+        </p>
+
+        <div class="action-buttons">
+            <button mat-raised-button color="primary" routerLink="/auth/login">
+                <mat-icon>login</mat-icon>
+                Iniciar Sesión
+            </button>
+            <button mat-button routerLink="/">
+                Volver al Inicio
+            </button>
+        </div>
+    </div>
+</div>

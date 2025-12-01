@@ -1,0 +1,86 @@
+.unauthorized-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-center) 35.36%, var(--gradient-end) 70.71%);
+    --gradient-start: #0F172A;
+    --gradient-center: #1E293B;
+    --gradient-end: #334155;
+}
+
+.unauthorized-content {
+    background: white;
+    border-radius: 16px;
+    padding: 48px 40px;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.error-icon {
+    margin-bottom: 24px;
+}
+
+.error-icon mat-icon {
+    font-size: 120px;
+    width: 120px;
+    height: 120px;
+    color: #f5576c;
+}
+
+.error-code {
+    font-size: 72px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 16px 0;
+    line-height: 1;
+}
+
+.error-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 16px 0;
+}
+
+.error-message {
+    font-size: 16px;
+    color: #6b7280;
+    margin: 0 0 32px 0;
+    line-height: 1.6;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.action-buttons button {
+    width: 100%;
+}
+
+.action-buttons button mat-icon {
+    margin-right: 8px;
+}
+
+@media (max-width: 576px) {
+    .unauthorized-content {
+        padding: 32px 24px;
+    }
+
+    .error-icon mat-icon {
+        font-size: 80px;
+        width: 80px;
+        height: 80px;
+    }
+
+    .error-code {
+        font-size: 56px;
+    }
+
+    .error-title {
+        font-size: 24px;
+    }
+}

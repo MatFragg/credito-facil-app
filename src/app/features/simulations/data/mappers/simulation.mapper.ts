@@ -34,10 +34,12 @@ export class SimulationMapper {
             termYears: dto.termYears,
             lifeInsuranceRate: dto.lifeInsuranceRate,
             propertyInsurance: dto.propertyInsurance,
+            propertyInsuranceRate: dto.propertyInsuranceRate,
             openingCommission: dto.openingCommission,
             notaryFees: dto.notaryFees,
             registrationFees: dto.registrationFees,
             amountToFinance: dto.amountToFinance,
+            loanAmount: dto.loanAmount,
             monthlyPayment: dto.monthlyPayment,
             totalMonthlyPayment: dto.totalMonthlyPayment,
             totalAmountToPay: dto.totalAmountToPay,
@@ -46,6 +48,16 @@ export class SimulationMapper {
             loanTermMonths: dto.loanTermMonths,
             totalLifeInsurance: dto.totalLifeInsurance,
             totalPropertyInsurance: dto.totalPropertyInsurance,
+            // Multi-currency
+            currency: dto.currency,
+            currencySymbol: dto.currencySymbol,
+            exchangeRateUsed: dto.exchangeRateUsed,
+            propertyPriceAlternate: dto.propertyPriceAlternate,
+            monthlyPaymentAlternate: dto.monthlyPaymentAlternate,
+            alternateCurrency: dto.alternateCurrency,
+            alternateCurrencySymbol: dto.alternateCurrencySymbol,
+            // Financial indicators
+            discountRate: dto.discountRate,
             npv: dto.npv,
             irr: dto.irr,
             tcea: dto.tcea,
@@ -115,12 +127,15 @@ export class SimulationMapper {
             termYears: data.termYears,
             lifeInsuranceRate: data.lifeInsuranceRate,
             propertyInsurance: data.propertyInsurance,
+            propertyInsuranceRate: data.propertyInsuranceRate,
             openingCommission: data.openingCommission,
             notaryFees: data.notaryFees,
             registrationFees: data.registrationFees,
             status: data.status,
             desgravamenRate: data.desgravamenRate,
-            applyPBP: data.applyPBP
+            applyPBP: data.applyPBP,
+            currency: data.currency,
+            discountRate: data.discountRate
         };
     }
 
@@ -143,12 +158,15 @@ export class SimulationMapper {
             termYears: data.termYears,
             lifeInsuranceRate: data.lifeInsuranceRate,
             propertyInsurance: data.propertyInsurance,
+            propertyInsuranceRate: data.propertyInsuranceRate,
             openingCommission: data.openingCommission,
             notaryFees: data.notaryFees,
             registrationFees: data.registrationFees,
             status: data.status,
             desgravamenRate: data.desgravamenRate,
-            applyPBP: data.applyPBP
+            applyPBP: data.applyPBP,
+            currency: data.currency,
+            discountRate: data.discountRate
         };
     }
 }

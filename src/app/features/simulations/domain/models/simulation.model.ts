@@ -24,13 +24,15 @@ export interface Simulation {
 
     // Additional costs
     lifeInsuranceRate: number;
-    propertyInsurance: number;
+    propertyInsurance: number | null;
+    propertyInsuranceRate?: number | null;
     openingCommission: number;
     notaryFees: number;
     registrationFees: number;
 
     // Calculated results
     amountToFinance: number;
+    loanAmount?: number;
     monthlyPayment: number;
     totalMonthlyPayment: number;
     totalAmountToPay: number;
@@ -40,6 +42,15 @@ export interface Simulation {
     totalLifeInsurance: number;
     totalPropertyInsurance: number;
 
+    // Multi-currency support
+    currency?: string;
+    currencySymbol?: string;
+    exchangeRateUsed?: number;
+    propertyPriceAlternate?: number;
+    monthlyPaymentAlternate?: number;
+    alternateCurrency?: string;
+    alternateCurrencySymbol?: string;
+
     // PBP and Desgravamen
     applyPBP?: boolean;
     pbpAmount?: number;
@@ -47,6 +58,7 @@ export interface Simulation {
     totalDesgravamenInsurance?: number;
 
     // Financial indicators
+    discountRate?: number;
     npv: number;
     irr: number;
     tcea: number;
@@ -73,13 +85,16 @@ export interface CreateSimulationData {
     annualRate: number;
     termYears: number;
     lifeInsuranceRate?: number;
-    propertyInsurance?: number;
+    propertyInsurance?: number | null;
+    propertyInsuranceRate?: number | null;
     openingCommission?: number;
     notaryFees?: number;
     registrationFees?: number;
     status?: SimulationStatus;
     desgravamenRate?: number;
     applyPBP?: boolean;
+    currency?: string;
+    discountRate?: number;
 }
 
 /**
@@ -99,13 +114,16 @@ export interface UpdateSimulationData {
     annualRate: number;
     termYears: number;
     lifeInsuranceRate?: number;
-    propertyInsurance?: number;
+    propertyInsurance?: number | null;
+    propertyInsuranceRate?: number | null;
     openingCommission?: number;
     notaryFees?: number;
     registrationFees?: number;
     status?: SimulationStatus;
     desgravamenRate?: number;
     applyPBP?: boolean;
+    currency?: string;
+    discountRate?: number;
 }
 
 /**

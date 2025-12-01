@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
@@ -40,6 +41,7 @@ import { BankEntity } from '../../../../bank-entities/domain/models/bank-entity.
         MatIconModule,
         MatSliderModule,
         MatCheckboxModule,
+        MatRadioModule,
         MatAutocompleteModule,
         MatSnackBarModule,
         DataTableComponent
@@ -116,6 +118,7 @@ export class SimulationCalculatorPageComponent extends BaseFormComponent impleme
             bankEntitySearch: [''], // For autocomplete display
             settingsId: [1, Validators.required],
             simulationName: [''],
+            currency: ['PEN', Validators.required],
             propertyPrice: [null, [Validators.required, Validators.min(0.01)]],
             downPayment: [null, [Validators.required, Validators.min(0)]],
             applyGovernmentBonus: [false],
@@ -124,12 +127,28 @@ export class SimulationCalculatorPageComponent extends BaseFormComponent impleme
             annualRate: [null, [Validators.required, Validators.min(0.01), Validators.max(100)]],
             termYears: [20, [Validators.required, Validators.min(1), Validators.max(30)]],
             lifeInsuranceRate: [0.0005],
+            propertyInsuranceType: ['fixed'],
             propertyInsurance: [50],
+            propertyInsuranceRate: [null],
             openingCommission: [0],
             notaryFees: [0],
             registrationFees: [0],
+            discountRate: [10, [Validators.required, Validators.min(0)]],
             applyPBP: [false],
             desgravamenRate: [0.00049]
+        });
+
+        // Property insurance type conditional logic
+        this.form.get('propertyInsuranceType')?.valueChanges.subscribe(type => {
+            if (type === 'fixed') {
+                this.form.get('propertyInsurance')?.enable();
+                this.form.get('propertyInsuranceRate')?.disable();
+                this.form.patchValue({ propertyInsuranceRate: null });
+            } else {
+                this.form.get('propertyInsurance')?.disable();
+                this.form.get('propertyInsuranceRate')?.enable();
+                this.form.patchValue({ propertyInsurance: null });
+            }
         });
 
         this.form.get('applyGovernmentBonus')?.valueChanges.subscribe(apply => {
@@ -173,8 +192,12 @@ export class SimulationCalculatorPageComponent extends BaseFormComponent impleme
         this.bankEntitiesFacade.loadAll();
     }
 
-    private _filterClients(value: string): Client[] {
-        const filterValue = value.toLowerCase();
+    private _filterClients(value: string | Client): Client[] {
+        // If value is an object (selected client), return all clients
+        if (typeof value === 'object' && value !== null) {
+            return this.allClients;
+        }
+        const filterValue = (value || '').toLowerCase();
         const result = this.allClients.filter(client =>
             ClientHelpers.getFullName(client).toLowerCase().includes(filterValue) ||
             (client.dni && client.dni.includes(filterValue))

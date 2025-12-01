@@ -18,6 +18,14 @@ import { CreatePropertyData, Property } from '../../../domain/models/property.mo
 import { BaseFormComponent } from '../../../../../shared/components/base-form/base-form.component';
 import { ClientsFacade } from '../../../../clients/presentation/state/clients.facade';
 import { Client, ClientHelpers } from '../../../../clients/domain/models/client.model';
+import { ClientRepository } from '../../../../clients/domain/repositories/client.repository';
+import { ClientRepositoryImpl } from '../../../../clients/data/repositories/client.repository.impl';
+import { GetClientsUseCase } from '../../../../clients/domain/usecases/get-clients.usecase';
+import { GetClientByIdUseCase } from '../../../../clients/domain/usecases/get-client-by-id.usecase';
+import { SearchClientByDniUseCase } from '../../../../clients/domain/usecases/search-client-by-dni.usecase';
+import { CreateClientUseCase } from '../../../../clients/domain/usecases/create-client.usecase';
+import { UpdateClientUseCase } from '../../../../clients/domain/usecases/update-client.usecase';
+import { DeleteClientUseCase } from '../../../../clients/domain/usecases/delete-client.usecase';
 
 @Component({
     selector: 'app-create-property-page',
@@ -33,6 +41,16 @@ import { Client, ClientHelpers } from '../../../../clients/domain/models/client.
         MatIconModule,
         MatSnackBarModule,
         MatAutocompleteModule
+    ],
+    providers: [
+        { provide: ClientRepository, useClass: ClientRepositoryImpl },
+        GetClientsUseCase,
+        GetClientByIdUseCase,
+        SearchClientByDniUseCase,
+        CreateClientUseCase,
+        UpdateClientUseCase,
+        DeleteClientUseCase,
+        ClientsFacade
     ],
     templateUrl: './create-property-page.component.html',
     styleUrls: ['./create-property-page.component.css']
@@ -105,8 +123,13 @@ export class CreatePropertyPageComponent extends BaseFormComponent implements On
         );
     }
 
-    private _filterClients(value: string): Client[] {
-        const filterValue = value.toLowerCase();
+
+    private _filterClients(value: string | Client): Client[] {
+        // If value is an object (selected client), return all clients
+        if (typeof value === 'object' && value !== null) {
+            return this.allClients;
+        }
+        const filterValue = (value || '').toLowerCase();
         return this.allClients.filter(client =>
             ClientHelpers.getFullName(client).toLowerCase().includes(filterValue) ||
             (client.dni && client.dni.includes(filterValue))
