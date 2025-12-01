@@ -1,3 +1,4 @@
+
 .app-layout {
   display: flex;
   height: 100vh;
@@ -21,4 +22,19 @@ app-side-nav-bar {
 
 .main-content {
   flex: 1;
+}
+
+
+.sidenav-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+
+@media (min-width: 992px) {
+  .sidenav-fab {
+    display: none;
+  }
 }

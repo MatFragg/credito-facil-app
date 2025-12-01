@@ -1,19 +1,40 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+
+import { Component, OnInit, OnDestroy, inject, signal, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs';
+import { Subject, filter } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatDrawerMode, MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { SideNavBarComponent } from '../../components/side-bar/side-nav-bar/side-nav-bar.component';
 import { HeaderComponent } from '../../components/header/header.component';
-import { MatSidenavContainer, MatSidenav, MatSidenavContent } from "@angular/material/sidenav";
 import { HeaderConfig } from '../../../../shared/models/header-config.model';
 
 @Component({
   selector: 'app-app-layout',
-  imports: [SideNavBarComponent, RouterOutlet, HeaderComponent, MatSidenavContainer, MatSidenav, MatSidenavContent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    MatSidenavModule,
+    MatIconModule,
+    MatButtonModule,
+    HeaderComponent,
+    SideNavBarComponent
+  ],
   templateUrl: './app-layout.component.html',
   styleUrl: './app-layout.component.css'
 })
-export class AppLayoutComponent implements OnInit {
+export class AppLayoutComponent implements OnInit, OnDestroy {
   private router = inject(Router);
+  private breakpoint = inject(BreakpointObserver);
+  private destroy$ = new Subject<void>();
+
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
+  sidenavMode: MatDrawerMode = 'side';
+  sidenavOpened = true;
 
   headerConfig = signal<HeaderConfig>({
     title: 'Dashboard',
@@ -24,15 +45,31 @@ export class AppLayoutComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    // Update header configuration on route changes
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.updateHeaderConfig();
-    });
-
-    // Initial configuration
+      filter(event => event instanceof NavigationEnd),
+      takeUntil(this.destroy$)
+    ).subscribe(() => this.updateHeaderConfig());
     this.updateHeaderConfig();
+
+    this.breakpoint.observe(['(max-width: 991px)'])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(state => {
+        const isMobile = state.matches;
+        this.sidenavMode = isMobile ? 'over' : 'side';
+        this.sidenavOpened = !isMobile;
+        if (isMobile && this.sidenav) this.sidenav.close();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  openSidenav(): void {
+    if (this.sidenavMode === 'over' && this.sidenav) {
+      this.sidenav.open();
+    }
   }
 
   private updateHeaderConfig(): void {
@@ -84,9 +121,7 @@ export class AppLayoutComponent implements OnInit {
         search: {
           placeholder: 'Buscar simulaciones...',
           value: '',
-          onSearch: (query: string) => {
-            // Search handled by simulations page component
-          }
+          onSearch: (_q: string) => {}
         },
         actions: [{
           type: 'button',
@@ -113,10 +148,7 @@ export class AppLayoutComponent implements OnInit {
         search: {
           placeholder: 'Buscar cliente por DNI...',
           value: '',
-          onSearch: (query: string) => {
-            // The search will be handled by the clients page component
-            // This is just for the header display
-          }
+          onSearch: (_q: string) => {}
         },
         actions: [{
           type: 'button',
@@ -133,7 +165,6 @@ export class AppLayoutComponent implements OnInit {
         subtitle: 'Administra las configuraciones del sistema'
       });
     } else {
-      // Default header for other routes
       this.headerConfig.set({
         title: 'Crédito Fácil',
         subtitle: 'Sistema de créditos hipotecarios'

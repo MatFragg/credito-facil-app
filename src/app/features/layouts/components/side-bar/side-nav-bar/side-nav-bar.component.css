@@ -7,12 +7,12 @@
   background-color: #FFFFFF;
 }
 
-/* El sidebar en sí */
+
 .sidebar {
   width: 260px;
   background-color: #FFFFFF;
   border-right: none;
-  /* La imagen no muestra un borde, usa sombra */
+
   box-shadow: 3px 0 6px rgba(0, 0, 0, 0.05);
   padding: 24px 24px 0 24px;
 }
@@ -21,37 +21,34 @@
   padding-top: 10px;
 }
 
-/* Estilo para CADA item de la lista (<a>) */
 a.mat-list-item {
   height: 44px;
-  /* Altura fija */
+
   margin: 4px 8px;
-  /* Margen para el espaciado del "active" */
+
   padding: 0 16px;
-  /* Padding interno */
+
   border-radius: 8px;
-  /* Bordes redondeados */
+
   color: #555;
-  /* Color de texto inactivo */
+
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Icono dentro del item */
 a.mat-list-item mat-icon {
   margin-right: 16px;
   color: #777;
-  /* Color de icono inactivo */
+
   transition: color 0.2s ease;
 }
 
-/* Efecto Hover (cuando pasas el mouse) */
+
 a.mat-list-item:hover {
   background-color: #f5f5f5;
-  /* Un gris muy claro al pasar el mouse */
+
 }
 
-/* --- ¡EL ESTADO ACTIVO! --- */
-/* Esta es la clase que pusimos en routerLinkActive="active-link" */
+
 a.mat-list-item.active-link {
   background-color: #eaf3ff;
   /* Fondo azul claro */
@@ -66,23 +63,23 @@ a.mat-list-item.active-link mat-icon {
 }
 
 
-/* --- 3. Separador --- */
+
 .separator {
   border: none;
   border-top: 1px solid #e0e0e0;
   /* Línea gris clara */
   margin: 16px 8px;
-  /* Espaciado arriba y abajo */
+
 }
 
-/* --- 4. Salir --- */
+
 .logout-link {
   height: 44px;
   margin: 4px 8px;
   padding: 0 16px;
   border-radius: 8px;
   color: #d9534f;
-  /* Color rojo para "Salir" */
+
   font-weight: 500;
   cursor: pointer;
 }
@@ -95,5 +92,28 @@ a.mat-list-item.active-link mat-icon {
 
 .logout-link:hover {
   background-color: #fdeeee;
-  /* Fondo rojo muy claro al pasar el mouse */
+
+}
+
+
+
+@media (max-width: 991px) {
+  .sidebar {
+    padding: 16px 16px 0 16px;
+    width: 260px;
+  }
+
+  .mat-nav-list {
+    padding-top: 6px;
+  }
+
+  a.mat-list-item {
+    height: 40px;
+    margin: 3px 6px;
+    padding: 0 12px;
+  }
+
+  a.mat-list-item mat-icon {
+    margin-right: 12px;
+  }
 }
