@@ -213,7 +213,7 @@
                         </div>
                         <div class="param-item">
                             <span class="param-label">Seguro Inmueble</span>
-                            <span class="param-value">{{ formatCurrency(simulation()!.propertyInsurance) }}</span>
+                            <span class="param-value">{{ formatCurrency(simulation()!.propertyInsurance ?? 0) }}</span>
                         </div>
                         @if (simulation()!.desgravamenRate) {
                         <div class="param-item">
