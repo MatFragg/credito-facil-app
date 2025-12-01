@@ -1,9 +1,24 @@
+
 <mat-sidenav-container class="app-layout">
-  <mat-sidenav mode="side" opened class="sidebar">
+  <mat-sidenav
+    #sidenav
+    class="sidebar"
+    [mode]="sidenavMode"
+    [opened]="sidenavOpened"
+  >
     <app-side-nav-bar></app-side-nav-bar>
   </mat-sidenav>
 
   <mat-sidenav-content class="main-content">
+    <button
+      mat-fab
+      class="sidenav-fab"
+      aria-label="Abrir menú"
+      *ngIf="sidenavMode === 'over' && !sidenav?.opened"
+      (click)="openSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
     <app-header [config]="headerConfig()"></app-header>
     <main class="app-content">
       <router-outlet></router-outlet>

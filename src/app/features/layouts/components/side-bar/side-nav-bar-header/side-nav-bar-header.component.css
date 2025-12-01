@@ -33,6 +33,28 @@
 .header-text .subtitle {
   font-size: 0.8rem;
   color: #6c757d;
-  /* Un gris sutil */
   display: block;
+}
+
+
+@media (max-width: 991px) {
+  .sidebar-header {
+    padding: 16px 16px 0 16px;
+  }
+  .logo-container {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+  }
+  .logo-container mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+  .header-text .title {
+    font-size: 1rem;
+  }
+  .header-text .subtitle {
+    display: none;
+  }
 }

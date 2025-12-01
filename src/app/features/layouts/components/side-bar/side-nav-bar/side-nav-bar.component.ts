@@ -1,4 +1,4 @@
-// ...existing code...
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -25,7 +25,7 @@ import { MatDividerModule } from '@angular/material/divider';
 })
 export class SideNavBarComponent {
   constructor() {
-    console.log('SideNavBarComponent instantiated'); // debug
+    console.log('SideNavBarComponent instantiated');
   }
 
   logout(): void {

@@ -1,36 +1,39 @@
-<app-side-nav-bar-header />
+<app-side-nav-bar-header></app-side-nav-bar-header>
 
 <mat-nav-list>
-  <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+  <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" aria-label="Ir a Inicio">
     <mat-icon>home</mat-icon>
     <span>Inicio</span>
   </a>
-  <a mat-list-item routerLink="/clients" routerLinkActive="active-link">
+  <a mat-list-item routerLink="/clients" routerLinkActive="active-link" aria-label="Ir a Clientes">
     <mat-icon>group</mat-icon>
     <span>Clientes</span>
   </a>
-  <a mat-list-item routerLink="/properties" routerLinkActive="active-link">
-    <mat-icon>domain</mat-icon> <span>Viviendas</span>
+  <a mat-list-item routerLink="/properties" routerLinkActive="active-link" aria-label="Ir a Viviendas">
+    <mat-icon>domain</mat-icon>
+    <span>Viviendas</span>
   </a>
-  <a mat-list-item routerLink="/simulations/calculator" routerLinkActive="active-link">
-    <mat-icon>calculate</mat-icon> <span>Simulador</span>
+  <a mat-list-item routerLink="/simulations/calculator" routerLinkActive="active-link" aria-label="Abrir Calculadora">
+    <mat-icon>calculate</mat-icon>
+    <span>Calculadora</span>
   </a>
-  <a mat-list-item routerLink="/bank-entities" routerLinkActive="active-link">
+  <a mat-list-item routerLink="/bank-entities" routerLinkActive="active-link" aria-label="Ir a Bancos">
     <mat-icon>account_balance</mat-icon>
-    <span>Entidades</span>
+    <span>Bancos</span>
   </a>
-  <a mat-list-item routerLink="/simulations" routerLinkActive="active-link">
+  <a mat-list-item routerLink="/simulations" routerLinkActive="active-link" aria-label="Ver Historial">
     <mat-icon>history</mat-icon>
     <span>Historial</span>
   </a>
-  <a mat-list-item routerLink="/settings" routerLinkActive="active-link">
+  <a mat-list-item routerLink="/settings" routerLinkActive="active-link" aria-label="Ir a Ajustes">
     <mat-icon>settings</mat-icon>
-    <span>Configuración</span>
+    <span>Ajustes</span>
   </a>
 </mat-nav-list>
 
 <hr class="separator">
 
-<a mat-list-item class="logout-link" (click)="logout()"> <mat-icon>exit_to_app</mat-icon>
+<a mat-list-item class="logout-link" (click)="logout()" aria-label="Salir">
+  <mat-icon>exit_to_app</mat-icon>
   <span>Salir</span>
 </a>
