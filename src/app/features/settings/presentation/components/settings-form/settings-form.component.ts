@@ -52,6 +52,7 @@ export class SettingsFormComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
+        console.log('[SettingsForm] ngOnInit - settings:', this.settings);
         if (this.settings) {
             this.loadSettings(this.settings);
         }
@@ -60,6 +61,7 @@ export class SettingsFormComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(): void {
+        console.log('[SettingsForm] ngOnChanges - settings:', this.settings);
         if (this.settings && this.form) {
             this.loadSettings(this.settings);
         }

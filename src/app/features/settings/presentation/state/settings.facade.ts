@@ -40,6 +40,7 @@ export class SettingsFacade {
 
         this.getCurrentSettingsUseCase.execute().subscribe({
             next: (settings) => {
+                console.log('[SettingsFacade] Settings loaded successfully:', settings);
                 this.state.update(s => ({
                     ...s,
                     currentSettings: settings,
@@ -47,8 +48,10 @@ export class SettingsFacade {
                 }));
             },
             error: (error) => {
+                console.log('[SettingsFacade] Error loading settings:', error);
                 // If settings don't exist (404), that's OK - allow creation
                 if (error.status === 404 || error.status === 0 || error.message?.includes('404')) {
+                    console.log('[SettingsFacade] No settings found (404) - allowing creation');
                     this.state.update(s => ({
                         ...s,
                         currentSettings: null,
@@ -57,6 +60,7 @@ export class SettingsFacade {
                     }));
                 } else {
                     // Other errors should be shown
+                    console.error('[SettingsFacade] Unexpected error:', error);
                     this.state.update(s => ({
                         ...s,
                         loading: false,
