@@ -7,7 +7,6 @@ interface SimulationItem {
   name: string;
   detail: string;
   monthlyPayment: number;
-  avatar: string;
 }
 
 @Component({
@@ -30,19 +29,16 @@ export class LatestSimulationsListComponent {
       name: 'María González',
       detail: 'Casa en Los Olivos - S/ 320,000',
       monthlyPayment: 1890,
-      avatar: 'assets/avatar1.jpg'
     },
     {
       name: 'Carlos Mendoza',
       detail: 'Depto en San Miguel - S/ 280,000',
       monthlyPayment: 1650,
-      avatar: 'assets/avatar2.jpg'
     },
     {
       name: 'Ana Torres',
       detail: 'Casa en Surco - S/ 450,000',
       monthlyPayment: 2340,
-      avatar: 'assets/avatar3.jpg'
     }
   ];
 
@@ -58,8 +54,8 @@ export class LatestSimulationsListComponent {
 
   itemConfig: ListItemConfig<SimulationItem> = {
     leading: {
-      type: 'avatar',
-      content: (item) => item.avatar
+      type: 'icon',
+      content: (item) => 'person'
     },
     main: {
       title: (item) => item.name,

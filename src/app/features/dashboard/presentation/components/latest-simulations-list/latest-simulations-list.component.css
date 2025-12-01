@@ -38,14 +38,6 @@
     border-bottom: none;
 }
 
-.sim-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 16px;
-}
-
 .sim-info {
     display: flex;
     flex-direction: column;

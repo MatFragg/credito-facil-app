@@ -52,7 +52,6 @@
 
     <!-- User Info (All Types) -->
     <div *ngIf="config.showUserInfo !== false" class="user-info">
-      <img src="assets/juan_perez_avatar.jpg" [alt]="'Avatar de ' + currentUser()?.firstName" class="user-avatar">
       <div class="user-text">
         <span class="user-name">
           {{ currentUser()?.firstName }} {{ currentUser()?.lastName }}
