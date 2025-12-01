@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    serverBaseUrl: 'http://localhost:8091/api/v1',
+    serverBaseUrl: 'https://credito-facil-backend.onrender.com/api/v1',
     turnstile: {
         siteKey: '0x4AAAAAACDj5ARCi7eazy-7'
     }

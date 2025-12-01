@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/credito-app",
+    "public": "dist/credito-app/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

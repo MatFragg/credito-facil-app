@@ -47,11 +47,22 @@ export class SettingsFacade {
                 }));
             },
             error: (error) => {
-                this.state.update(s => ({
-                    ...s,
-                    loading: false,
-                    error: error.message || 'Error loading settings'
-                }));
+                // If settings don't exist (404), that's OK - allow creation
+                if (error.status === 404 || error.status === 0 || error.message?.includes('404')) {
+                    this.state.update(s => ({
+                        ...s,
+                        currentSettings: null,
+                        loading: false,
+                        error: null // No error - this is expected when no settings exist
+                    }));
+                } else {
+                    // Other errors should be shown
+                    this.state.update(s => ({
+                        ...s,
+                        loading: false,
+                        error: error.message || 'Error loading settings'
+                    }));
+                }
             }
         });
     }
